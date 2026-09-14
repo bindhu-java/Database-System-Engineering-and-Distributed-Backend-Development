@@ -1,0 +1,1875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exam Preparation App</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f7fb;
+    color: #222;
+}
+
+header {
+    background: #1f4e79;
+    color: white;
+    padding: 18px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+header button {
+    background: white;
+    color: #1f4e79;
+    border: none;
+    padding: 9px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.container {
+    width: 90%;
+    max-width: 1100px;
+    margin: 30px auto;
+}
+
+.page {
+    display: none;
+}
+
+.page.active {
+    display: block;
+}
+
+.card {
+    background: white;
+    padding: 28px;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.10);
+    margin-bottom: 20px;
+}
+
+.center {
+    text-align: center;
+}
+
+input {
+    width: 100%;
+    padding: 13px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 7px;
+    font-size: 15px;
+}
+
+button {
+    border: none;
+    border-radius: 7px;
+    padding: 12px 20px;
+    cursor: pointer;
+    font-size: 15px;
+    background: #1f4e79;
+    color: white;
+    margin: 5px;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+.google-btn {
+    background: #4285f4;
+    width: 100%;
+}
+
+.subject-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 18px;
+}
+
+.subject {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    text-align: center;
+    cursor: pointer;
+    border: 2px solid transparent;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+}
+
+.subject:hover {
+    border-color: #1f4e79;
+}
+
+.subject h3 {
+    margin-bottom: 8px;
+}
+
+.count-grid {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.count-btn {
+    width: 100px;
+    height: 70px;
+    font-size: 20px;
+}
+
+video {
+    width: 100%;
+    max-width: 600px;
+    border-radius: 10px;
+    background: black;
+}
+
+.status {
+    padding: 12px;
+    margin: 15px 0;
+    border-radius: 7px;
+    background: #eef3f8;
+}
+
+.success {
+    background: #d4edda;
+    color: #155724;
+}
+
+.error {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.warning {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.question-number {
+    color: #1f4e79;
+    font-weight: bold;
+}
+
+.question {
+    font-size: 22px;
+    margin: 20px 0;
+    font-weight: bold;
+}
+
+.option {
+    display: block;
+    width: 100%;
+    text-align: left;
+    background: #f7f9fc;
+    color: #222;
+    border: 1px solid #ccc;
+    margin: 10px 0;
+}
+
+.option:hover {
+    background: #e8eef5;
+}
+
+.option.correct {
+    background: #d4edda;
+    border-color: #28a745;
+}
+
+.option.wrong {
+    background: #f8d7da;
+    border-color: #dc3545;
+}
+
+.feedback {
+    padding: 15px;
+    margin-top: 20px;
+    border-radius: 8px;
+    display: none;
+}
+
+.feedback.show {
+    display: block;
+}
+
+.explanation {
+    background: #eef5ff;
+    border-left: 5px solid #1f4e79;
+    padding: 15px;
+    margin-top: 15px;
+}
+
+.youtube {
+    display: inline-block;
+    margin-top: 12px;
+    background: #e62117;
+    color: white;
+    text-decoration: none;
+    padding: 11px 17px;
+    border-radius: 6px;
+}
+
+.next-btn {
+    margin-top: 20px;
+}
+
+.result-score {
+    font-size: 55px;
+    font-weight: bold;
+    color: #1f4e79;
+}
+
+.result-boxes {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+}
+
+.result-box {
+    padding: 20px;
+    background: #f4f7fb;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.result-box strong {
+    display: block;
+    font-size: 25px;
+    color: #1f4e79;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+th {
+    background: #1f4e79;
+    color: white;
+}
+
+.topic-card {
+    background: #f7f9fc;
+    padding: 18px;
+    margin: 12px 0;
+    border-radius: 8px;
+}
+
+.topic-card a {
+    color: #e62117;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+nav {
+    margin-top: 15px;
+}
+
+nav button {
+    background: #315f8b;
+}
+
+@media(max-width:700px) {
+    .result-boxes {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .container {
+        width: 95%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>Exam Preparation App</h1>
+
+    <div>
+        <button onclick="showPage('homePage')">Home</button>
+        <button onclick="showPage('gradingPage'); loadLeaderboard();">Leaderboard</button>
+        <button onclick="showPage('topicsPage'); loadTopics();">Topics</button>
+    </div>
+</header>
+
+
+<div class="container">
+
+<!-- LOGIN PAGE -->
+<section id="authPage" class="page active">
+
+    <div class="card center">
+
+        <h2>Welcome to Exam Preparation App</h2>
+
+        <p>Sign in to start your examination</p>
+
+        <input
+            type="text"
+            id="studentName"
+            placeholder="Enter your name"
+        >
+
+        <input
+            type="email"
+            id="studentEmail"
+            placeholder="Enter your email"
+        >
+
+        <button onclick="login()" style="width:100%;">
+            Sign In
+        </button>
+
+        <button
+            class="google-btn"
+            onclick="googleLogin()"
+        >
+            Continue with Google
+        </button>
+
+        <p id="loginMessage"></p>
+
+    </div>
+
+</section>
+
+
+<!-- HOME / SUBJECT PAGE -->
+<section id="homePage" class="page">
+
+    <div class="card center">
+
+        <h2>Select Subject</h2>
+
+        <p>
+            Choose the subject for your examination.
+        </p>
+
+        <div class="subject-grid">
+
+            <div class="subject" onclick="selectSubject('DSA')">
+                <h3>DSA</h3>
+                <p>Data Structures and Algorithms</p>
+            </div>
+
+            <div class="subject" onclick="selectSubject('Database')">
+                <h3>Database</h3>
+                <p>SQL, NoSQL and Databases</p>
+            </div>
+
+            <div class="subject" onclick="selectSubject('IoT')">
+                <h3>IoT</h3>
+                <p>Internet of Things</p>
+            </div>
+
+            <div class="subject" onclick="selectSubject('Operating Systems')">
+                <h3>Operating Systems</h3>
+                <p>OS concepts and processes</p>
+            </div>
+
+            <div class="subject" onclick="selectSubject('German')">
+                <h3>German</h3>
+                <p>German language</p>
+            </div>
+
+            <div class="subject" onclick="selectSubject('Japanese')">
+                <h3>Japanese</h3>
+                <p>Japanese language</p>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- QUESTION COUNT -->
+<section id="countPage" class="page">
+
+    <div class="card center">
+
+        <h2 id="selectedSubjectTitle">
+            Select Number of Questions
+        </h2>
+
+        <p>Choose how many questions you want to attempt.</p>
+
+        <div class="count-grid">
+
+            <button class="count-btn" onclick="selectCount(5)">
+                5
+            </button>
+
+            <button class="count-btn" onclick="selectCount(8)">
+                8
+            </button>
+
+            <button class="count-btn" onclick="selectCount(10)">
+                10
+            </button>
+
+            <button class="count-btn" onclick="selectCount(15)">
+                15
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- RECORDING PAGE -->
+<section id="recordPage" class="page">
+
+    <div class="card center">
+
+        <h2>Camera and Voice Recording</h2>
+
+        <p>
+            Camera and microphone recording are mandatory
+            before starting the quiz.
+        </p>
+
+        <video id="cameraPreview" autoplay muted></video>
+
+        <div id="recordStatus" class="status warning">
+            Recording has not started.
+        </div>
+
+        <button onclick="startRecording()">
+            Start Camera & Recording
+        </button>
+
+        <button onclick="beginQuiz()">
+            Start Quiz
+        </button>
+
+        <p id="permissionMessage"></p>
+
+    </div>
+
+</section>
+
+
+<!-- QUIZ PAGE -->
+<section id="quizPage" class="page">
+
+    <div class="card">
+
+        <div class="question-number" id="questionNumber">
+            Question 1
+        </div>
+
+        <div id="questionText" class="question"></div>
+
+        <div id="optionsContainer"></div>
+
+        <div id="feedback" class="feedback">
+
+            <h3 id="feedbackTitle"></h3>
+
+            <p id="feedbackText"></p>
+
+            <div id="explanationBox" class="explanation"></div>
+
+            <a
+                id="youtubeLink"
+                class="youtube"
+                target="_blank"
+            >
+                Watch on YouTube
+            </a>
+
+        </div>
+
+        <button
+            id="nextButton"
+            class="next-btn"
+            onclick="nextQuestion()"
+            style="display:none;"
+        >
+            Next Question
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- RESULT PAGE -->
+<section id="resultPage" class="page">
+
+    <div class="card center">
+
+        <h2>Quiz Result</h2>
+
+        <div id="resultScore" class="result-score">
+            0%
+        </div>
+
+        <h3 id="resultMessage">
+            Well done!
+        </h3>
+
+        <div class="result-boxes">
+
+            <div class="result-box">
+                Correct
+                <strong id="correctResult">0</strong>
+            </div>
+
+            <div class="result-box">
+                Wrong
+                <strong id="wrongResult">0</strong>
+            </div>
+
+            <div class="result-box">
+                Total
+                <strong id="totalResult">0</strong>
+            </div>
+
+            <div class="result-box">
+                Grade
+                <strong id="gradeResult">F</strong>
+            </div>
+
+        </div>
+
+        <br>
+
+        <p>
+            Marks:
+            <strong id="marksResult">0</strong>
+        </p>
+
+        <p>
+            Percentage:
+            <strong id="percentageResult">0%</strong>
+        </p>
+
+        <button onclick="showPage('gradingPage'); loadLeaderboard();">
+            View Leaderboard
+        </button>
+
+        <button onclick="showPage('homePage')">
+            Take Another Quiz
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- LEADERBOARD -->
+<section id="gradingPage" class="page">
+
+    <div class="card">
+
+        <h2>Leaderboard / Grading</h2>
+
+        <p>
+            All quiz results are stored in the browser.
+        </p>
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Name</th>
+                    <th>Subject</th>
+                    <th>Marks</th>
+                    <th>Percentage</th>
+                    <th>Grade</th>
+                </tr>
+            </thead>
+
+            <tbody id="leaderboardBody"></tbody>
+
+        </table>
+
+        <br>
+
+        <button onclick="clearLeaderboard()">
+            Clear Leaderboard
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- TOPICS -->
+<section id="topicsPage" class="page">
+
+    <div class="card">
+
+        <h2>Topics and Learning Videos</h2>
+
+        <div id="topicsContainer"></div>
+
+    </div>
+
+</section>
+
+</div>
+
+
+<script>
+
+/* =====================================================
+   INTERNAL COURSE OUTCOME INFORMATION
+   These are stored in code only.
+   They are NOT displayed as website subjects.
+   ===================================================== */
+
+const CO_REQUIREMENTS = {
+
+    CO1: [
+        "Normalized relational schemas",
+        "SQL joins",
+        "CTEs",
+        "Window functions",
+        "Transactions",
+        "SQL backend integration"
+    ],
+
+    CO2: [
+        "SQL vs NoSQL",
+        "MongoDB",
+        "Vector database",
+        "Semantic search"
+    ],
+
+    CO3: [
+        "FastAPI",
+        "Validation",
+        "Dependency Injection",
+        "JWT Authentication",
+        "OpenAPI",
+        "Flask",
+        "Django"
+    ]
+
+};
+
+
+/* =====================================================
+   QUESTION BANK
+   ===================================================== */
+
+const questionBank = {
+
+    "DSA": [
+
+        {
+            q: "Which algorithm uses divide-and-conquer?",
+            options: [
+                "Merge Sort",
+                "Linear Search",
+                "BFS",
+                "Stack"
+            ],
+            answer: 0,
+            explanation: "Merge Sort divides the array into smaller parts, sorts them and then merges them.",
+            co: "CO3"
+        },
+
+        {
+            q: "Which data structure follows LIFO?",
+            options: [
+                "Queue",
+                "Stack",
+                "Tree",
+                "Graph"
+            ],
+            answer: 1,
+            explanation: "Stack follows Last In First Out (LIFO).",
+            co: "CO3"
+        },
+
+        {
+            q: "What is the average time complexity of binary search?",
+            options: [
+                "O(n)",
+                "O(log n)",
+                "O(n²)",
+                "O(1)"
+            ],
+            answer: 1,
+            explanation: "Binary search repeatedly divides the search space into half.",
+            co: "CO3"
+        },
+
+        {
+            q: "Which algorithm is used for shortest path in a graph with non-negative weights?",
+            options: [
+                "Dijkstra",
+                "KMP",
+                "Merge Sort",
+                "DFS"
+            ],
+            answer: 0,
+            explanation: "Dijkstra's algorithm finds shortest paths from a source vertex when edge weights are non-negative.",
+            co: "CO3"
+        },
+
+        {
+            q: "Which data structure is commonly used in BFS?",
+            options: [
+                "Stack",
+                "Queue",
+                "Heap",
+                "Array"
+            ],
+            answer: 1,
+            explanation: "Breadth First Search uses a queue to process vertices level by level.",
+            co: "CO3"
+        },
+
+        {
+            q: "What does KMP stand for?",
+            options: [
+                "Knuth Morris Pratt",
+                "Key Matching Process",
+                "Known Match Pattern",
+                "Kernel Matching Program"
+            ],
+            answer: 0,
+            explanation: "KMP stands for Knuth-Morris-Pratt pattern matching algorithm.",
+            co: "CO3"
+        },
+
+        {
+            q: "Which algorithm is used for minimum spanning tree?",
+            options: [
+                "Kruskal",
+                "KMP",
+                "Binary Search",
+                "BFS"
+            ],
+            answer: 0,
+            explanation: "Kruskal's algorithm is used to construct a minimum spanning tree.",
+            co: "CO3"
+        },
+
+        {
+            q: "Which structure is used to implement recursion?",
+            options: [
+                "Stack",
+                "Queue",
+                "Graph",
+                "Hash Table"
+            ],
+            answer: 0,
+            explanation: "Function calls are stored in the call stack during recursion.",
+            co: "CO3"
+        }
+
+    ],
+
+
+    "Database": [
+
+        {
+            q: "Which normal form removes repeating groups?",
+            options: [
+                "1NF",
+                "2NF",
+                "3NF",
+                "BCNF"
+            ],
+            answer: 0,
+            explanation: "First Normal Form requires atomic values and removes repeating groups.",
+            co: "CO1"
+        },
+
+        {
+            q: "Which SQL clause is used to filter grouped records?",
+            options: [
+                "WHERE",
+                "HAVING",
+                "ORDER BY",
+                "FROM"
+            ],
+            answer: 1,
+            explanation: "HAVING filters groups after GROUP BY.",
+            co: "CO1"
+        },
+
+        {
+            q: "Which SQL feature can define a temporary named result set?",
+            options: [
+                "CTE",
+                "DELETE",
+                "DROP",
+                "INDEX"
+            ],
+            answer: 0,
+            explanation: "A Common Table Expression (CTE) creates a temporary named result set.",
+            co: "CO1"
+        },
+
+        {
+            q: "Which function is commonly used as a SQL window function?",
+            options: [
+                "ROW_NUMBER",
+                "CREATE",
+                "DROP",
+                "INSERT"
+            ],
+            answer: 0,
+            explanation: "ROW_NUMBER() is a commonly used SQL window function.",
+            co: "CO1"
+        },
+
+        {
+            q: "Which database is a NoSQL document database?",
+            options: [
+                "MongoDB",
+                "MySQL",
+                "Oracle",
+                "PostgreSQL"
+            ],
+            answer: 0,
+            explanation: "MongoDB stores data as flexible document-oriented records.",
+            co: "CO2"
+        },
+
+        {
+            q: "Which property ensures transactions are all-or-nothing?",
+            options: [
+                "Atomicity",
+                "Consistency",
+                "Isolation",
+                "Durability"
+            ],
+            answer: 0,
+            explanation: "Atomicity means a transaction is completed fully or not performed at all.",
+            co: "CO1"
+        },
+
+        {
+            q: "Which SQL operation combines rows from multiple tables?",
+            options: [
+                "JOIN",
+                "DROP",
+                "DELETE",
+                "ALTER"
+            ],
+            answer: 0,
+            explanation: "JOIN combines related rows from two or more tables.",
+            co: "CO1"
+        },
+
+        {
+            q: "MongoDB primarily stores data as:",
+            options: [
+                "Documents",
+                "Rows only",
+                "Columns only",
+                "Binary trees"
+            ],
+            answer: 0,
+            explanation: "MongoDB stores data as BSON documents.",
+            co: "CO2"
+        }
+
+    ],
+
+
+    "IoT": [
+
+        {
+            q: "What does IoT stand for?",
+            options: [
+                "Internet of Things",
+                "Input Output Technology",
+                "Internet of Technology",
+                "Internal Object Transfer"
+            ],
+            answer: 0,
+            explanation: "IoT stands for Internet of Things.",
+            co: "CO3"
+        },
+
+        {
+            q: "Which device can measure temperature?",
+            options: [
+                "Temperature sensor",
+                "Keyboard",
+                "Monitor",
+                "Speaker"
+            ],
+            answer: 0,
+            explanation: "A temperature sensor measures temperature.",
+            co: "CO3"
+        },
+
+        {
+            q: "What is MQTT commonly used for?",
+            options: [
+                "IoT messaging",
+                "Image editing",
+                "Word processing",
+                "Video rendering"
+            ],
+            answer: 0,
+            explanation: "MQTT is a lightweight messaging protocol commonly used in IoT systems.",
+            co: "CO3"
+        },
+
+        {
+            q: "Which component detects physical conditions?",
+            options: [
+                "Sensor",
+                "Compiler",
+                "Database",
+                "Browser"
+            ],
+            answer: 0,
+            explanation: "Sensors detect physical conditions such as temperature, pressure and light.",
+            co: "CO3"
+        },
+
+        {
+            q: "Which protocol is lightweight and commonly used in IoT?",
+            options: [
+                "MQTT",
+                "FTP",
+                "SMTP",
+                "POP3"
+            ],
+            answer: 0,
+            explanation: "MQTT is designed for lightweight machine-to-machine communication.",
+            co: "CO3"
+        }
+
+    ],
+
+
+    "Operating Systems": [
+
+        {
+            q: "What is the main function of an operating system?",
+            options: [
+                "Manage hardware and software resources",
+                "Create websites",
+                "Edit images",
+                "Design databases"
+            ],
+            answer: 0,
+            explanation: "An operating system manages hardware, software and system resources.",
+            co: "CO3"
+        },
+
+        {
+            q: "Which system call creates a new process in Unix/Linux?",
+            options: [
+                "fork()",
+                "open()",
+                "read()",
+                "close()"
+            ],
+            answer: 0,
+            explanation: "fork() creates a new child process.",
+            co: "CO3"
+        },
+
+        {
+            q: "Which process state means the process is currently executing?",
+            options: [
+                "Ready",
+                "Running",
+                "Waiting",
+                "Terminated"
+            ],
+            answer: 1,
+            explanation: "A running process is currently being executed by the CPU.",
+            co: "CO3"
+        },
+
+        {
+            q: "Which component manages processes?",
+            options: [
+                "Operating System",
+                "Keyboard",
+                "Monitor",
+                "Browser"
+            ],
+            answer: 0,
+            explanation: "The operating system manages process creation, scheduling and termination.",
+            co: "CO3"
+        },
+
+        {
+            q: "What does CPU scheduling decide?",
+            options: [
+                "Which process gets CPU time",
+                "Which file is deleted",
+                "Which monitor is used",
+                "Which browser opens"
+            ],
+            answer: 0,
+            explanation: "CPU scheduling determines which ready process gets CPU execution time.",
+            co: "CO3"
+        }
+
+    ],
+
+
+    "German": [
+
+        {
+            q: "What does 'Guten Morgen' mean?",
+            options: [
+                "Good Morning",
+                "Good Night",
+                "Good Evening",
+                "Goodbye"
+            ],
+            answer: 0,
+            explanation: "Guten Morgen means Good Morning.",
+            co: "CO3"
+        },
+
+        {
+            q: "What does 'Danke' mean?",
+            options: [
+                "Please",
+                "Thank you",
+                "Hello",
+                "Goodbye"
+            ],
+            answer: 1,
+            explanation: "Danke means Thank you.",
+            co: "CO3"
+        },
+
+        {
+            q: "What does 'Hallo' mean?",
+            options: [
+                "Hello",
+                "Good night",
+                "Thanks",
+                "Please"
+            ],
+            answer: 0,
+            explanation: "Hallo means Hello.",
+            co: "CO3"
+        },
+
+        {
+            q: "What does 'Ich gehe meistens um elf Uhr ins Bett' mean?",
+            options: [
+                "I usually go to bed at eleven",
+                "I wake up at six",
+                "I eat lunch at eleven",
+                "I go to school at eleven"
+            ],
+            answer: 0,
+            explanation: "The sentence means: I usually go to bed at eleven o'clock.",
+            co: "CO3"
+        },
+
+        {
+            q: "What does 'Auf Wiedersehen' mean?",
+            options: [
+                "See you again",
+                "Thank you",
+                "Good morning",
+                "Good night"
+            ],
+            answer: 0,
+            explanation: "Auf Wiedersehen means Goodbye / See you again.",
+            co: "CO3"
+        }
+
+    ],
+
+
+    "Japanese": [
+
+        {
+            q: "What does 'Ohayou' mean?",
+            options: [
+                "Good morning",
+                "Good night",
+                "Thank you",
+                "Goodbye"
+            ],
+            answer: 0,
+            explanation: "Ohayou means Good morning.",
+            co: "CO3"
+        },
+
+        {
+            q: "What does 'Arigatou' mean?",
+            options: [
+                "Hello",
+                "Thank you",
+                "Good night",
+                "Good morning"
+            ],
+            answer: 1,
+            explanation: "Arigatou means Thank you.",
+            co: "CO3"
+        },
+
+        {
+            q: "What does 'Konnichiwa' mean?",
+            options: [
+                "Hello",
+                "Good night",
+                "Thank you",
+                "Goodbye"
+            ],
+            answer: 0,
+            explanation: "Konnichiwa is a common Japanese greeting meaning Hello.",
+            co: "CO3"
+        },
+
+        {
+            q: "What does 'Sayonara' mean?",
+            options: [
+                "Goodbye",
+                "Hello",
+                "Thank you",
+                "Good morning"
+            ],
+            answer: 0,
+            explanation: "Sayonara means Goodbye.",
+            co: "CO3"
+        },
+
+        {
+            q: "What does 'Oyasumi' mean?",
+            options: [
+                "Good night",
+                "Good morning",
+                "Hello",
+                "Thank you"
+            ],
+            answer: 0,
+            explanation: "Oyasumi means Good night.",
+            co: "CO3"
+        }
+
+    ]
+
+};
+
+
+/* =====================================================
+   TOPICS
+   ===================================================== */
+
+const topics = {
+
+    "DSA": [
+        ["Arrays", "https://www.youtube.com/results?search_query=arrays+data+structures"],
+        ["Linked List", "https://www.youtube.com/results?search_query=linked+list+data+structure"],
+        ["Stack", "https://www.youtube.com/results?search_query=stack+data+structure"],
+        ["Queue", "https://www.youtube.com/results?search_query=queue+data+structure"],
+        ["KMP Pattern Matching", "https://www.youtube.com/results?search_query=KMP+pattern+matching"]
+    ],
+
+    "Database": [
+        ["Normalization", "https://www.youtube.com/results?search_query=database+normalization+1NF+2NF+3NF"],
+        ["SQL Joins", "https://www.youtube.com/results?search_query=SQL+joins"],
+        ["CTE", "https://www.youtube.com/results?search_query=SQL+CTE"],
+        ["Window Functions", "https://www.youtube.com/results?search_query=SQL+window+functions"],
+        ["MongoDB", "https://www.youtube.com/results?search_query=MongoDB+tutorial"]
+    ],
+
+    "IoT": [
+        ["Introduction to IoT", "https://www.youtube.com/results?search_query=IoT+introduction"],
+        ["Sensors", "https://www.youtube.com/results?search_query=IoT+sensors"],
+        ["MQTT", "https://www.youtube.com/results?search_query=MQTT+IoT"]
+    ],
+
+    "Operating Systems": [
+        ["Processes", "https://www.youtube.com/results?search_query=operating+system+processes"],
+        ["fork()", "https://www.youtube.com/results?search_query=Linux+fork+system+call"],
+        ["CPU Scheduling", "https://www.youtube.com/results?search_query=CPU+scheduling+operating+systems"]
+    ],
+
+    "German": [
+        ["German Greetings", "https://www.youtube.com/results?search_query=German+greetings+for+beginners"],
+        ["German Daily Routine", "https://www.youtube.com/results?search_query=German+daily+routine"]
+    ],
+
+    "Japanese": [
+        ["Japanese Greetings", "https://www.youtube.com/results?search_query=Japanese+greetings+for+beginners"],
+        ["Basic Japanese", "https://www.youtube.com/results?search_query=Japanese+language+beginners"]
+    ]
+
+};
+
+
+/* =====================================================
+   VARIABLES
+   ===================================================== */
+
+let currentStudent = "";
+let currentEmail = "";
+let selectedSubject = "";
+let selectedCount = 5;
+
+let questions = [];
+let currentQuestion = 0;
+let correctAnswers = 0;
+let wrongAnswers = 0;
+
+let mediaStream = null;
+let recorder = null;
+let recording = false;
+
+
+/* =====================================================
+   PAGE NAVIGATION
+   ===================================================== */
+
+function showPage(pageId) {
+
+    document.querySelectorAll(".page").forEach(page => {
+        page.classList.remove("active");
+    });
+
+    document.getElementById(pageId).classList.add("active");
+}
+
+
+/* =====================================================
+   LOGIN
+   ===================================================== */
+
+function login() {
+
+    const name =
+        document.getElementById("studentName").value.trim();
+
+    const email =
+        document.getElementById("studentEmail").value.trim();
+
+    if (!name || !email) {
+
+        document.getElementById("loginMessage").innerHTML =
+            '<span class="error">Please enter your name and email.</span>';
+
+        return;
+    }
+
+    currentStudent = name;
+    currentEmail = email;
+
+    showPage("homePage");
+}
+
+
+function googleLogin() {
+
+    const name = prompt("Enter your name for Google sign in:");
+
+    if (!name) {
+        return;
+    }
+
+    currentStudent = name;
+    currentEmail = name.toLowerCase().replace(/\s+/g, ".") + "@gmail.com";
+
+    showPage("homePage");
+}
+
+
+/* =====================================================
+   SUBJECT
+   ===================================================== */
+
+function selectSubject(subject) {
+
+    selectedSubject = subject;
+
+    document.getElementById("selectedSubjectTitle").innerText =
+        subject + " - Select Number of Questions";
+
+    showPage("countPage");
+}
+
+
+/* =====================================================
+   QUESTION COUNT
+   ===================================================== */
+
+function selectCount(count) {
+
+    selectedCount = count;
+
+    questions =
+        [...questionBank[selectedSubject]]
+        .sort(() => Math.random() - 0.5)
+        .slice(
+            0,
+            Math.min(count, questionBank[selectedSubject].length)
+        );
+
+    currentQuestion = 0;
+    correctAnswers = 0;
+    wrongAnswers = 0;
+
+    showPage("recordPage");
+
+    document.getElementById("recordStatus").innerHTML =
+        "Camera and microphone recording are required before the quiz.";
+}
+
+
+/* =====================================================
+   CAMERA + MICROPHONE
+   ===================================================== */
+
+async function startRecording() {
+
+    try {
+
+        mediaStream =
+            await navigator.mediaDevices.getUserMedia({
+                video: true,
+                audio: true
+            });
+
+        document.getElementById("cameraPreview").srcObject =
+            mediaStream;
+
+        recorder =
+            new MediaRecorder(mediaStream);
+
+        recorder.ondataavailable = function(event) {
+
+            if (event.data.size > 0) {
+                recordedChunks.push(event.data);
+            }
+
+        };
+
+        recorder.start();
+
+        recording = true;
+
+        document.getElementById("recordStatus").className =
+            "status success";
+
+        document.getElementById("recordStatus").innerText =
+            "Recording is active. You can now start the quiz.";
+
+        document.getElementById("permissionMessage").innerText = "";
+
+    }
+
+    catch(error) {
+
+        recording = false;
+
+        document.getElementById("recordStatus").className =
+            "status error";
+
+        document.getElementById("recordStatus").innerText =
+            "Camera and microphone permission is required.";
+
+        document.getElementById("permissionMessage").innerText =
+            "Please allow camera and microphone permission in your browser and try again.";
+
+    }
+
+}
+
+
+let recordedChunks = [];
+
+
+/* =====================================================
+   START QUIZ
+   ===================================================== */
+
+function beginQuiz() {
+
+    if (
+        !recording ||
+        !recorder ||
+        recorder.state !== "recording"
+    ) {
+
+        alert(
+            "Quiz cannot start. Camera and microphone recording must be active."
+        );
+
+        return;
+    }
+
+    showPage("quizPage");
+
+    displayQuestion();
+}
+
+
+/* =====================================================
+   DISPLAY QUESTION
+   ===================================================== */
+
+function displayQuestion() {
+
+    const question =
+        questions[currentQuestion];
+
+    document.getElementById("questionNumber").innerText =
+        "Question " +
+        (currentQuestion + 1) +
+        " / " +
+        questions.length;
+
+    document.getElementById("questionText").innerText =
+        question.q;
+
+    const optionsContainer =
+        document.getElementById("optionsContainer");
+
+    optionsContainer.innerHTML = "";
+
+    question.options.forEach((option, index) => {
+
+        const button =
+            document.createElement("button");
+
+        button.className = "option";
+
+        button.innerText =
+            option;
+
+        button.onclick = function() {
+
+            checkAnswer(index, button);
+
+        };
+
+        optionsContainer.appendChild(button);
+
+    });
+
+
+    document.getElementById("feedback")
+        .classList.remove("show");
+
+    document.getElementById("nextButton")
+        .style.display = "none";
+
+}
+
+
+/* =====================================================
+   CHECK ANSWER
+   ===================================================== */
+
+function checkAnswer(selectedIndex, selectedButton) {
+
+    const question =
+        questions[currentQuestion];
+
+    const optionButtons =
+        document.querySelectorAll(".option");
+
+    optionButtons.forEach(button => {
+        button.disabled = true;
+    });
+
+
+    if (selectedIndex === question.answer) {
+
+        selectedButton.classList.add("correct");
+
+        correctAnswers++;
+
+        document.getElementById("feedbackTitle").innerText =
+            "Correct Answer ✓";
+
+        document.getElementById("feedbackText").innerText =
+            "Your answer is correct.";
+
+        document.getElementById("explanationBox").innerText =
+            question.explanation;
+
+    }
+
+    else {
+
+        selectedButton.classList.add("wrong");
+
+        optionButtons[question.answer]
+            .classList.add("correct");
+
+        wrongAnswers++;
+
+        document.getElementById("feedbackTitle").innerText =
+            "Wrong Answer ✗";
+
+        document.getElementById("feedbackText").innerText =
+            "Correct answer: " +
+            question.options[question.answer];
+
+        document.getElementById("explanationBox").innerText =
+            question.explanation;
+
+        document.getElementById("youtubeLink").href =
+            "https://www.youtube.com/results?search_query=" +
+            encodeURIComponent(question.q);
+
+    }
+
+
+    document.getElementById("feedback")
+        .classList.add("show");
+
+    document.getElementById("nextButton")
+        .style.display = "inline-block";
+
+}
+
+
+/* =====================================================
+   NEXT QUESTION
+   ===================================================== */
+
+function nextQuestion() {
+
+    currentQuestion++;
+
+    if (currentQuestion >= questions.length) {
+
+        finishQuiz();
+
+        return;
+    }
+
+    displayQuestion();
+}
+
+
+/* =====================================================
+   FINISH QUIZ
+   ===================================================== */
+
+function finishQuiz() {
+
+    if (recorder && recorder.state === "recording") {
+        recorder.stop();
+    }
+
+    if (mediaStream) {
+
+        mediaStream.getTracks().forEach(track => {
+            track.stop();
+        });
+
+    }
+
+    recording = false;
+
+    showResult();
+}
+
+
+/* =====================================================
+   RESULT
+   ===================================================== */
+
+function showResult() {
+
+    const total =
+        questions.length;
+
+    const percentage =
+        Math.round((correctAnswers / total) * 100);
+
+    const marks =
+        correctAnswers;
+
+    let grade;
+
+    if (percentage >= 90) {
+        grade = "A+";
+    }
+    else if (percentage >= 80) {
+        grade = "A";
+    }
+    else if (percentage >= 70) {
+        grade = "B";
+    }
+    else if (percentage >= 60) {
+        grade = "C";
+    }
+    else if (percentage >= 50) {
+        grade = "D";
+    }
+    else {
+        grade = "F";
+    }
+
+
+    document.getElementById("resultScore").innerText =
+        percentage + "%";
+
+    document.getElementById("resultMessage").innerText =
+        "Well done, " + currentStudent + "!";
+
+    document.getElementById("correctResult").innerText =
+        correctAnswers;
+
+    document.getElementById("wrongResult").innerText =
+        wrongAnswers;
+
+    document.getElementById("totalResult").innerText =
+        total;
+
+    document.getElementById("gradeResult").innerText =
+        grade;
+
+    document.getElementById("marksResult").innerText =
+        marks + " / " + total;
+
+    document.getElementById("percentageResult").innerText =
+        percentage + "%";
+
+
+    saveResult(
+        currentStudent,
+        selectedSubject,
+        marks,
+        total,
+        percentage,
+        grade
+    );
+
+    showPage("resultPage");
+}
+
+
+/* =====================================================
+   SAVE LEADERBOARD
+   ===================================================== */
+
+function saveResult(
+    name,
+    subject,
+    marks,
+    total,
+    percentage,
+    grade
+) {
+
+    let leaderboard =
+        JSON.parse(
+            localStorage.getItem("examLeaderboard")
+        ) || [];
+
+    leaderboard.push({
+
+        name: name,
+        subject: subject,
+        marks: marks,
+        total: total,
+        percentage: percentage,
+        grade: grade,
+        date: new Date().toLocaleString()
+
+    });
+
+    leaderboard.sort(
+        (a, b) =>
+            b.percentage - a.percentage
+    );
+
+    localStorage.setItem(
+        "examLeaderboard",
+        JSON.stringify(leaderboard)
+    );
+
+}
+
+
+/* =====================================================
+   LOAD LEADERBOARD
+   ===================================================== */
+
+function loadLeaderboard() {
+
+    const body =
+        document.getElementById("leaderboardBody");
+
+    body.innerHTML = "";
+
+    const leaderboard =
+        JSON.parse(
+            localStorage.getItem("examLeaderboard")
+        ) || [];
+
+    if (leaderboard.length === 0) {
+
+        body.innerHTML =
+            `<tr>
+                <td colspan="6">
+                    No results available yet.
+                </td>
+            </tr>`;
+
+        return;
+    }
+
+
+    leaderboard.forEach((student, index) => {
+
+        const row =
+            document.createElement("tr");
+
+        row.innerHTML = `
+
+            <td>${index + 1}</td>
+
+            <td>${student.name}</td>
+
+            <td>${student.subject}</td>
+
+            <td>
+                ${student.marks} / ${student.total}
+            </td>
+
+            <td>
+                ${student.percentage}%
+            </td>
+
+            <td>
+                ${student.grade}
+            </td>
+
+        `;
+
+        body.appendChild(row);
+
+    });
+
+}
+
+
+/* =====================================================
+   CLEAR LEADERBOARD
+   ===================================================== */
+
+function clearLeaderboard() {
+
+    if (
+        confirm(
+            "Are you sure you want to clear the leaderboard?"
+        )
+    ) {
+
+        localStorage.removeItem(
+            "examLeaderboard"
+        );
+
+        loadLeaderboard();
+
+    }
+
+}
+
+
+/* =====================================================
+   TOPICS
+   ===================================================== */
+
+function loadTopics() {
+
+    const container =
+        document.getElementById("topicsContainer");
+
+    container.innerHTML = "";
+
+    Object.keys(topics).forEach(subject => {
+
+        const heading =
+            document.createElement("h3");
+
+        heading.innerText =
+            subject;
+
+        container.appendChild(heading);
+
+
+        topics[subject].forEach(topic => {
+
+            const div =
+                document.createElement("div");
+
+            div.className =
+                "topic-card";
+
+            div.innerHTML = `
+
+                <strong>
+                    ${topic[0]}
+                </strong>
+
+                <br><br>
+
+                <a
+                    href="${topic[1]}"
+                    target="_blank"
+                >
+                    Watch on YouTube
+                </a>
+
+            `;
+
+            container.appendChild(div);
+
+        });
+
+    });
+
+}
+
+
+/* =====================================================
+   INITIAL PAGE
+   ===================================================== */
+
+showPage("authPage");
+
+</script>
+
+</body>
+</html>
