@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+
+{% block title %}New Shipment | LogiFlow{% endblock %}
+
+{% block page_title %}
+Create New Shipment
+{% endblock %}
+
+{% block content %}
+
+<div class="form-container panel">
+
+    <div class="form-title">
+
+        <h2>Shipment Details</h2>
+
+        <p>
+            Enter the information required to create a new delivery.
+        </p>
+
+    </div>
+
+
+    <form method="POST">
+
+        <div class="form-grid">
+
+            <div class="form-group">
+
+                <label>Customer Name</label>
+
+                <input
+                    type="text"
+                    name="customer"
+                    placeholder="Enter customer name"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Package Type</label>
+
+                <select name="package_type">
+
+                    <option>Electronics</option>
+                    <option>Documents</option>
+                    <option>Clothing</option>
+                    <option>Medical Supplies</option>
+                    <option>Machinery</option>
+                    <option>Other</option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Pickup Location</label>
+
+                <input
+                    type="text"
+                    name="pickup"
+                    placeholder="Example: Hyderabad"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Delivery Location</label>
+
+                <input
+                    type="text"
+                    name="destination"
+                    placeholder="Example: Bengaluru"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Estimated Delivery</label>
+
+                <input
+                    type="text"
+                    name="estimated_delivery"
+                    placeholder="Example: Tomorrow, 4:00 PM"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Priority</label>
+
+                <select name="priority">
+
+                    <option>Normal</option>
+                    <option>High</option>
+                    <option>Urgent</option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+
+        <div class="form-actions">
+
+            <a href="{{ url_for('shipments') }}"
+               class="secondary-button">
+                Cancel
+            </a>
+
+            <button class="primary-button">
+                Create Shipment
+            </button>
+
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}

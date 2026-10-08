@@ -1,0 +1,251 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard | LogiFlow{% endblock %}
+
+{% block page_title %}
+Dashboard
+{% endblock %}
+
+{% block content %}
+
+<div class="welcome-row">
+
+    <div>
+        <h2>Good morning, Administrator 👋</h2>
+
+        <p>
+            Here's what's happening with your deliveries today.
+        </p>
+    </div>
+
+    <a href="{{ url_for('add_shipment') }}"
+       class="primary-button">
+        + New Shipment
+    </a>
+
+</div>
+
+
+<div class="stats-grid">
+
+    <div class="stat-card">
+        <div class="stat-icon blue">▤</div>
+
+        <div>
+            <span>Total Shipments</span>
+            <h2>{{ total }}</h2>
+            <small class="positive">↑ 12.5% this month</small>
+        </div>
+    </div>
+
+
+    <div class="stat-card">
+        <div class="stat-icon orange">◉</div>
+
+        <div>
+            <span>In Transit</span>
+            <h2>{{ in_transit }}</h2>
+            <small>Currently moving</small>
+        </div>
+    </div>
+
+
+    <div class="stat-card">
+        <div class="stat-icon red">!</div>
+
+        <div>
+            <span>Delayed</span>
+            <h2>{{ delayed }}</h2>
+            <small class="negative">Needs attention</small>
+        </div>
+    </div>
+
+
+    <div class="stat-card">
+        <div class="stat-icon green">✓</div>
+
+        <div>
+            <span>Delivered</span>
+            <h2>{{ delivered }}</h2>
+            <small class="positive">Successful deliveries</small>
+        </div>
+    </div>
+
+</div>
+
+
+<div class="dashboard-grid">
+
+    <div class="panel map-panel">
+
+        <div class="panel-header">
+            <div>
+                <h3>Live Delivery Overview</h3>
+                <p>Real-time shipment activity</p>
+            </div>
+
+            <span class="live-badge">
+                ● LIVE
+            </span>
+        </div>
+
+        <div class="map-area">
+
+            <div class="map-line line-one"></div>
+            <div class="map-line line-two"></div>
+
+            <div class="location location-one">
+                <span>●</span>
+                Hyderabad
+            </div>
+
+            <div class="truck">🚚</div>
+
+            <div class="location location-two">
+                <span>●</span>
+                Bengaluru
+            </div>
+
+            <div class="location location-three">
+                <span>●</span>
+                Chennai
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="panel">
+
+        <div class="panel-header">
+
+            <div>
+                <h3>Delivery Performance</h3>
+                <p>Current distribution</p>
+            </div>
+
+        </div>
+
+        <div class="performance">
+
+            <div class="performance-row">
+                <span>Delivered</span>
+
+                <strong>{{ delivered }}</strong>
+            </div>
+
+            <div class="progress">
+                <div class="progress-green"
+                     style="width:72%">
+                </div>
+            </div>
+
+
+            <div class="performance-row">
+                <span>In Transit</span>
+
+                <strong>{{ in_transit }}</strong>
+            </div>
+
+            <div class="progress">
+                <div class="progress-blue"
+                     style="width:21%">
+                </div>
+            </div>
+
+
+            <div class="performance-row">
+                <span>Delayed</span>
+
+                <strong>{{ delayed }}</strong>
+            </div>
+
+            <div class="progress">
+                <div class="progress-red"
+                     style="width:7%">
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="panel">
+
+    <div class="panel-header">
+
+        <div>
+            <h3>Recent Shipments</h3>
+            <p>Latest delivery activity</p>
+        </div>
+
+        <a href="{{ url_for('shipments') }}"
+           class="view-link">
+            View all →
+        </a>
+
+    </div>
+
+
+    <div class="table-wrapper">
+
+        <table>
+
+            <thead>
+
+                <tr>
+                    <th>Tracking ID</th>
+                    <th>Customer</th>
+                    <th>Route</th>
+                    <th>Status</th>
+                    <th>Current Location</th>
+                    <th>ETA</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+            {% for shipment in recent %}
+
+                <tr>
+
+                    <td>
+                        <strong>{{ shipment.tracking_id }}</strong>
+                    </td>
+
+                    <td>{{ shipment.customer }}</td>
+
+                    <td>
+                        {{ shipment.pickup }}
+                        →
+                        {{ shipment.destination }}
+                    </td>
+
+                    <td>
+                        <span class="status {{ shipment.status|lower|replace(' ', '-') }}">
+                            {{ shipment.status }}
+                        </span>
+                    </td>
+
+                    <td>{{ shipment.current_location }}</td>
+
+                    <td>{{ shipment.estimated_delivery }}</td>
+
+                </tr>
+
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+{% endblock %}
