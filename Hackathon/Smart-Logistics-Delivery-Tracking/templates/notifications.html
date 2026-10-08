@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}Notifications | LogiFlow{% endblock %}
+
+{% block page_title %}
+Notifications
+{% endblock %}
+
+{% block content %}
+
+<div class="page-heading">
+
+    <div>
+        <h2>Notification Center</h2>
+        <p>Important shipment and delivery updates.</p>
+    </div>
+
+</div>
+
+
+<div class="notification-list">
+
+{% for notification in notifications %}
+
+    <div class="notification-card {{ notification.notification_type }}">
+
+        <div class="notification-icon">
+
+            {% if notification.notification_type == "success" %}
+                ✓
+            {% elif notification.notification_type == "danger" %}
+                !
+            {% elif notification.notification_type == "warning" %}
+                ⚠
+            {% else %}
+                i
+            {% endif %}
+
+        </div>
+
+
+        <div class="notification-content">
+
+            <strong>
+                {{ notification.message }}
+            </strong>
+
+            <small>
+                {{ notification.created_at }}
+            </small>
+
+        </div>
+
+    </div>
+
+{% endfor %}
+
+</div>
+
+{% endblock %}

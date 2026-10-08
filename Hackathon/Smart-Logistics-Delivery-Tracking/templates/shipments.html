@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+
+{% block title %}Shipments | LogiFlow{% endblock %}
+
+{% block page_title %}
+Shipment Management
+{% endblock %}
+
+{% block content %}
+
+<div class="page-heading">
+
+    <div>
+        <h2>All Shipments</h2>
+        <p>Manage and monitor your delivery operations.</p>
+    </div>
+
+    <a href="{{ url_for('add_shipment') }}"
+       class="primary-button">
+        + Create Shipment
+    </a>
+
+</div>
+
+
+<div class="panel">
+
+    <form class="search-bar"
+          method="GET"
+          action="{{ url_for('shipments') }}">
+
+        <div class="search-input">
+
+            <span>⌕</span>
+
+            <input
+                type="text"
+                name="search"
+                value="{{ search }}"
+                placeholder="Search tracking ID, customer or location..."
+            >
+
+        </div>
+
+        <button class="secondary-button">
+            Search
+        </button>
+
+    </form>
+
+
+    <div class="table-wrapper">
+
+        <table>
+
+            <thead>
+
+                <tr>
+                    <th>Tracking ID</th>
+                    <th>Customer</th>
+                    <th>Route</th>
+                    <th>Package</th>
+                    <th>Status</th>
+                    <th>Priority</th>
+                    <th>ETA</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+            {% for shipment in shipments %}
+
+                <tr>
+
+                    <td>
+                        <strong>{{ shipment.tracking_id }}</strong>
+                    </td>
+
+                    <td>{{ shipment.customer }}</td>
+
+                    <td>
+                        {{ shipment.pickup }}
+                        →
+                        {{ shipment.destination }}
+                    </td>
+
+                    <td>{{ shipment.package_type }}</td>
+
+                    <td>
+                        <span class="status {{ shipment.status|lower|replace(' ', '-') }}">
+                            {{ shipment.status }}
+                        </span>
+                    </td>
+
+                    <td>
+                        <span class="priority {{ shipment.priority|lower }}">
+                            {{ shipment.priority }}
+                        </span>
+                    </td>
+
+                    <td>{{ shipment.estimated_delivery }}</td>
+
+                </tr>
+
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+{% endblock %}

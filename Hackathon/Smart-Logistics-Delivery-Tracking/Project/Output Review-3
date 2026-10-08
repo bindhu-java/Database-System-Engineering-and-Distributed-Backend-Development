@@ -1,0 +1,618 @@
+==================================================
+ HIGH-PERFORMANCE MEDICAL INFORMATION SEARCH
+==================================================
+Total Medical Records : 199
+
+================ MENU ================
+1. KMP
+2. Z-Function
+3. Rabin-Karp
+4. Edit Distance
+5. LCS
+6. Subset DP
+7. Interval DP
+8. Bitmask DP
+9. Ford-Fulkerson / Edmonds-Karp
+10. Max-Flow / Min-Cut
+11. Bipartite Matching
+12. CO1 Problem Classification
+13. Medical Keyword Search
+14. Exit
+
+Enter choice: 1
+Enter medical word: MRI
+
+========== KMP SEARCH ==========
+Record 17 : MRI scan is used for neurological disorders
+Record 27 : MRI helps detect brain disorders
+Record 37 : MRI provides detailed brain images
+Record 56 : MRI scan helps identify neurological disorders
+Record 65 : MRI can detect brain abnormalities
+Record 76 : MRI helps diagnose neurological problems
+Record 90 : MRI provides detailed internal images
+Record 105 : MRI helps diagnose brain conditions
+Record 114 : MRI is useful for neurological diagnosis
+Record 124 : MRI can identify neurological abnormalities
+Record 136 : MRI scan shows detailed brain structure
+Record 148 : MRI helps doctors identify brain disease
+Record 155 : MRI is used for brain imaging
+Record 164 : MRI can identify brain abnormalities
+Record 173 : MRI helps diagnose neurological conditions
+Record 186 : MRI gives detailed images of the brain
+Record 196 : MRI helps detect neurological disorders
+
+Total Matching Records : 17
+
+================ MENU ================
+1. KMP
+2. Z-Function
+3. Rabin-Karp
+4. Edit Distance
+5. LCS
+6. Subset DP
+7. Interval DP
+8. Bitmask DP
+9. Ford-Fulkerson / Edmonds-Karp
+10. Max-Flow / Min-Cut
+11. Bipartite Matching
+12. CO1 Problem Classification
+13. Medical Keyword Search
+14. Exit
+
+Enter choice: 2
+Enter medical word: chckup
+
+========== Z-FUNCTION SEARCH ==========
+
+Total Matching Records : 0
+
+================ MENU ================
+1. KMP
+2. Z-Function
+3. Rabin-Karp
+4. Edit Distance
+5. LCS
+6. Subset DP
+7. Interval DP
+8. Bitmask DP
+9. Ford-Fulkerson / Edmonds-Karp
+10. Max-Flow / Min-Cut
+11. Bipartite Matching
+12. CO1 Problem Classification
+13. Medical Keyword Search
+14. Exit
+
+Enter choice: 2
+Enter medical word: checkup
+
+========== Z-FUNCTION SEARCH ==========
+Record 36 : Heart patients need regular medical checkups
+Record 122 : Heart disease requires regular checkups
+Record 160 : Heart patients require regular checkups
+
+Total Matching Records : 3
+
+================ MENU ================
+1. KMP
+2. Z-Function
+3. Rabin-Karp
+4. Edit Distance
+5. LCS
+6. Subset DP
+7. Interval DP
+8. Bitmask DP
+9. Ford-Fulkerson / Edmonds-Karp
+10. Max-Flow / Min-Cut
+11. Bipartite Matching
+12. CO1 Problem Classification
+13. Medical Keyword Search
+14. Exit
+
+Enter choice: 3
+Enter medical word: Severe
+
+========== RABIN-KARP SEARCH ==========
+Record 2 : Severe headache with nausea and dizziness
+Record 6 : Migraine causes severe headache and nausea
+Record 15 : Kidney stones may cause severe abdominal pain
+Record 21 : Severe headache requires medical evaluation
+Record 32 : Kidney stones can cause severe pain
+Record 49 : Patient has fever and severe headache
+Record 64 : Patient has severe headache and vomiting
+Record 81 : Patient has migraine and severe headache
+Record 86 : Kidney stones may cause severe pain
+Record 99 : Patient has severe headache and nausea
+Record 111 : Kidney stones may cause severe abdominal pain
+Record 126 : Severe headache should be evaluated by a doctor
+Record 140 : Patient has severe headache with fever
+Record 161 : Kidney stones cause severe pain
+Record 165 : Patient has severe headache
+Record 199 : Severe headache requires medical consultation
+
+Total Matching Records : 16
+
+================ MENU ================
+1. KMP
+2. Z-Function
+3. Rabin-Karp
+4. Edit Distance
+5. LCS
+6. Subset DP
+7. Interval DP
+8. Bitmask DP
+9. Ford-Fulkerson / Edmonds-Karp
+10. Max-Flow / Min-Cut
+11. Bipartite Matching
+12. CO1 Problem Classification
+13. Medical Keyword Search
+14. Exit
+
+Enter choice: 4
+Enter medical word: Kidney
+
+========== MEDICAL KEYWORD SEARCH ==========
+Record 9 : Kidney patient requires regular blood tests
+Record 15 : Kidney stones may cause severe abdominal pain
+Record 23 : Kidney disease requires regular blood tests
+Record 32 : Kidney stones can cause severe pain
+Record 39 : Kidney patients should maintain proper hydration
+Record 47 : Kidney disease may affect blood pressure
+Record 54 : Kidney stones may cause abdominal pain
+Record 62 : Kidney patients require regular blood tests
+Record 70 : Kidney infection may cause fever and pain
+Record 79 : Kidney disease requires proper treatment
+Record 80 : Diabetes can affect kidney function
+Record 86 : Kidney stones may cause severe pain
+Record 94 : Kidney patients should drink adequate water
+Record 104 : Kidney disease requires blood tests
+Record 111 : Kidney stones may cause severe abdominal pain
+Record 118 : Kidney disease may cause weakness
+Record 125 : Kidney patients need regular health monitoring
+Record 131 : Kidney stones can cause pain during urination
+Record 139 : Kidney disease requires proper hydration
+Record 147 : Kidney infection may cause fever
+Record 154 : Kidney patients need regular blood monitoring
+Record 161 : Kidney stones cause severe pain
+Record 162 : Diabetes can affect kidney health
+Record 168 : Kidney disease requires medical care
+Record 176 : Kidney stones can cause abdominal pain
+Record 183 : Kidney patients should maintain hydration
+Record 190 : Kidney infection causes fever and pain
+Record 197 : Kidney disease may affect blood pressure
+
+Total Matching Records : 28
+
+Comparing:
+Record 9 : Kidney patient requires regular blood tests
+Record 15 : Kidney stones may cause severe abdominal pain
+
+Edit Distance : 32
+
+================ MENU ================
+1. KMP
+2. Z-Function
+3. Rabin-Karp
+4. Edit Distance
+5. LCS
+6. Subset DP
+7. Interval DP
+8. Bitmask DP
+9. Ford-Fulkerson / Edmonds-Karp
+10. Max-Flow / Min-Cut
+11. Bipartite Matching
+12. CO1 Problem Classification
+13. Medical Keyword Search
+14. Exit
+
+Enter choice: 5
+Enter medical word: Asthma
+
+========== MEDICAL KEYWORD SEARCH ==========
+Record 8 : Asthma patient has cough and breathing difficulty
+Record 22 : Asthma may cause cough and breathing problems
+Record 38 : Asthma patients may experience cough
+Record 48 : Asthma causes breathing difficulty and cough
+Record 58 : Asthma causes wheezing and cough
+Record 73 : Asthma patients should avoid triggers
+Record 84 : Asthma may cause difficulty breathing
+Record 96 : Asthma patients may experience chest tightness
+Record 107 : Asthma causes cough and wheezing
+Record 117 : Asthma patients may have breathing difficulty
+Record 128 : Asthma treatment helps control cough
+Record 142 : Asthma can cause cough at night
+Record 157 : Asthma causes cough and breathing difficulty
+Record 167 : Asthma patients may have wheezing
+Record 179 : Asthma may cause chest tightness
+Record 191 : Asthma causes difficulty in breathing
+
+Total Matching Records : 16
+
+Record 8 : Asthma patient has cough and breathing difficulty
+Record 22 : Asthma may cause cough and breathing problems
+
+LCS Length : 33
+
+================ MENU ================
+1. KMP
+2. Z-Function
+3. Rabin-Karp
+4. Edit Distance
+5. LCS
+6. Subset DP
+7. Interval DP
+8. Bitmask DP
+9. Ford-Fulkerson / Edmonds-Karp
+10. Max-Flow / Min-Cut
+11. Bipartite Matching
+12. CO1 Problem Classification
+13. Medical Keyword Search
+14. Exit
+
+Enter choice: 6
+Enter medical word: Heart
+
+========== MEDICAL KEYWORD SEARCH ==========
+Record 5 : Heart patient requires ECG and blood pressure monitoring
+Record 14 : Heart disease requires regular ECG monitoring
+Record 25 : Heart disease can cause chest pain
+Record 30 : ECG records electrical activity of the heart
+Record 36 : Heart patients need regular medical checkups
+Record 46 : ECG helps identify heart rhythm problems
+Record 53 : Heart disease requires ECG examination
+Record 61 : Heart patients should monitor blood pressure
+Record 69 : ECG is used to check heart activity
+Record 75 : Heart attack can cause chest pain
+Record 83 : ECG can detect abnormal heart rhythm
+Record 89 : Heart disease can affect blood circulation
+Record 95 : ECG records heart electrical signals
+Record 103 : Heart patients require ECG monitoring
+Record 110 : Heart disease can cause chest discomfort
+Record 116 : ECG helps evaluate heart function
+Record 122 : Heart disease requires regular checkups
+Record 133 : Heart patients should exercise regularly
+Record 141 : ECG examination is important for heart patients
+Record 145 : Heart disease may cause chest pain
+Record 153 : Heart disease requires ECG and blood tests
+Record 160 : Heart patients require regular checkups
+Record 166 : ECG monitors heart electrical activity
+Record 172 : Heart disease can cause chest pain
+Record 178 : ECG helps diagnose heart problems
+Record 185 : Heart disease requires healthy lifestyle
+Record 189 : ECG detects irregular heart rhythm
+Record 194 : Heart patients need regular blood pressure checks
+
+Total Matching Records : 28
+
+Values generated from matching records:
+Record 5 -> 8
+Record 14 -> 6
+Record 25 -> 6
+Record 30 -> 7
+Record 36 -> 6
+Record 46 -> 6
+Record 53 -> 5
+Record 61 -> 6
+Record 69 -> 7
+Record 75 -> 6
+
+Enter target sum: 35
+Subset EXISTS for target 35
+
+================ MENU ================
+1. KMP
+2. Z-Function
+3. Rabin-Karp
+4. Edit Distance
+5. LCS
+6. Subset DP
+7. Interval DP
+8. Bitmask DP
+9. Ford-Fulkerson / Edmonds-Karp
+10. Max-Flow / Min-Cut
+11. Bipartite Matching
+12. CO1 Problem Classification
+13. Medical Keyword Search
+14. Exit
+
+Enter choice: 7
+Enter medical word: Blood
+
+========== MEDICAL KEYWORD SEARCH ==========
+Record 3 : Diabetes patient has high blood sugar and headache
+Record 5 : Heart patient requires ECG and blood pressure monitoring
+Record 9 : Kidney patient requires regular blood tests
+Record 12 : High blood pressure may cause headache and dizziness
+Record 20 : Blood pressure should be checked regularly
+Record 23 : Kidney disease requires regular blood tests
+Record 26 : Diabetes patients should monitor blood glucose
+Record 33 : Diabetes can affect blood vessels
+Record 34 : High blood pressure can cause headache
+Record 41 : Diabetes requires regular blood sugar testing
+Record 44 : Blood tests help diagnose many diseases
+Record 47 : Kidney disease may affect blood pressure
+Record 59 : High blood pressure requires regular monitoring
+Record 61 : Heart patients should monitor blood pressure
+Record 62 : Kidney patients require regular blood tests
+Record 67 : Blood tests are useful for medical diagnosis
+Record 74 : High blood sugar requires medical monitoring
+Record 82 : Blood pressure monitoring prevents complications
+Record 87 : Diabetes patients need regular blood tests
+Record 89 : Heart disease can affect blood circulation
+Record 92 : Blood glucose should be monitored regularly
+Record 97 : Diabetes patients should control blood sugar
+Record 102 : Diabetes requires regular blood glucose testing
+Record 104 : Kidney disease requires blood tests
+Record 108 : Blood pressure should be monitored regularly
+Record 121 : Blood tests help monitor patient health
+Record 127 : Diabetes affects blood sugar levels
+Record 132 : Blood pressure may increase during stress
+Record 143 : Blood tests can detect health problems
+Record 153 : Heart disease requires ECG and blood tests
+Record 154 : Kidney patients need regular blood monitoring
+Record 158 : High blood pressure can cause headache
+Record 169 : Diabetes requires blood glucose control
+Record 170 : Blood tests are required for diagnosis
+Record 181 : Blood pressure needs regular checking
+Record 184 : Diabetes patients should monitor blood sugar
+Record 192 : Blood tests help doctors diagnose diseases
+Record 194 : Heart patients need regular blood pressure checks
+Record 197 : Kidney disease may affect blood pressure
+
+Total Matching Records : 39
+
+Interval DP Minimum Cost : 5903
+
+================ MENU ================
+1. KMP
+2. Z-Function
+3. Rabin-Karp
+4. Edit Distance
+5. LCS
+6. Subset DP
+7. Interval DP
+8. Bitmask DP
+9. Ford-Fulkerson / Edmonds-Karp
+10. Max-Flow / Min-Cut
+11. Bipartite Matching
+12. CO1 Problem Classification
+13. Medical Keyword Search
+14. Exit
+
+Enter choice: 8
+Enter medical word: ECG
+
+========== MEDICAL KEYWORD SEARCH ==========
+Record 5 : Heart patient requires ECG and blood pressure monitoring
+Record 14 : Heart disease requires regular ECG monitoring
+Record 30 : ECG records electrical activity of the heart
+Record 46 : ECG helps identify heart rhythm problems
+Record 53 : Heart disease requires ECG examination
+Record 69 : ECG is used to check heart activity
+Record 83 : ECG can detect abnormal heart rhythm
+Record 95 : ECG records heart electrical signals
+Record 103 : Heart patients require ECG monitoring
+Record 116 : ECG helps evaluate heart function
+Record 129 : ECG detects abnormal cardiac activity
+Record 141 : ECG examination is important for heart patients
+Record 153 : Heart disease requires ECG and blood tests
+Record 166 : ECG monitors heart electrical activity
+Record 178 : ECG helps diagnose heart problems
+Record 189 : ECG detects irregular heart rhythm
+
+Total Matching Records : 16
+
+Bitmask DP Minimum Assignment Cost : 1
+
+================ MENU ================
+1. KMP
+2. Z-Function
+3. Rabin-Karp
+4. Edit Distance
+5. LCS
+6. Subset DP
+7. Interval DP
+8. Bitmask DP
+9. Ford-Fulkerson / Edmonds-Karp
+10. Max-Flow / Min-Cut
+11. Bipartite Matching
+12. CO1 Problem Classification
+13. Medical Keyword Search
+14. Exit
+
+Enter choice: 9
+Enter medical word: glucose
+
+========== MEDICAL KEYWORD SEARCH ==========
+Record 11 : Diabetes requires regular glucose monitoring
+Record 26 : Diabetes patients should monitor blood glucose
+Record 55 : Diabetes patients should monitor glucose levels
+Record 92 : Blood glucose should be monitored regularly
+Record 102 : Diabetes requires regular blood glucose testing
+Record 152 : Diabetes patients need regular glucose checks
+Record 169 : Diabetes requires blood glucose control
+
+Total Matching Records : 7
+
+Ford-Fulkerson / Edmonds-Karp
+Maximum Flow : 23
+
+================ MENU ================
+1. KMP
+2. Z-Function
+3. Rabin-Karp
+4. Edit Distance
+5. LCS
+6. Subset DP
+7. Interval DP
+8. Bitmask DP
+9. Ford-Fulkerson / Edmonds-Karp
+10. Max-Flow / Min-Cut
+11. Bipartite Matching
+12. CO1 Problem Classification
+13. Medical Keyword Search
+14. Exit
+
+Enter choice: 8
+Enter medical word: headache
+
+========== MEDICAL KEYWORD SEARCH ==========
+Record 1 : Patient has headache and fever with mild cough
+Record 2 : Severe headache with nausea and dizziness
+Record 3 : Diabetes patient has high blood sugar and headache
+Record 6 : Migraine causes severe headache and nausea
+Record 7 : Patient with fever has headache and body pain
+Record 10 : Patient has headache due to dehydration
+Record 12 : High blood pressure may cause headache and dizziness
+Record 16 : Patient has headache and vomiting
+Record 21 : Severe headache requires medical evaluation
+Record 24 : Patient has fever and headache after infection
+Record 28 : Patient has headache and weakness
+Record 31 : Patient has migraine headache and dizziness
+Record 34 : High blood pressure can cause headache
+Record 40 : Patient has headache with blurred vision
+Record 45 : Patient has headache and nausea
+Record 49 : Patient has fever and severe headache
+Record 51 : Patient reports persistent headache and fatigue
+Record 57 : Patient has headache and neck pain
+Record 64 : Patient has severe headache and vomiting
+Record 72 : Patient has headache and eye pain
+Record 77 : Patient has fever and headache
+Record 81 : Patient has migraine and severe headache
+Record 88 : Patient has headache with dizziness
+Record 93 : Patient has headache and weakness
+Record 99 : Patient has severe headache and nausea
+Record 100 : Headache is associated with migraine and nausea
+Record 106 : Patient has headache and fatigue
+Record 109 : Fever and headache may indicate infection
+Record 115 : Patient has headache and vomiting
+Record 119 : Fever can cause body pain and headache
+Record 126 : Severe headache should be evaluated by a doctor
+Record 134 : Patient has headache and blurred vision
+Record 140 : Patient has severe headache with fever
+Record 146 : Patient has headache and nausea
+Record 150 : Patient has chronic headache and dizziness
+Record 156 : Patient has headache with nausea
+Record 158 : High blood pressure can cause headache
+Record 165 : Patient has severe headache
+Record 174 : Patient has headache and weakness
+Record 180 : Fever and headache are common symptoms
+Record 182 : Patient has migraine headache
+Record 188 : Patient has headache and vomiting
+Record 195 : Patient has fever and headache
+Record 199 : Severe headache requires medical consultation
+
+Total Matching Records : 44
+
+Bitmask DP Minimum Assignment Cost : 2
+
+================ MENU ================
+1. KMP
+2. Z-Function
+3. Rabin-Karp
+4. Edit Distance
+5. LCS
+6. Subset DP
+7. Interval DP
+8. Bitmask DP
+9. Ford-Fulkerson / Edmonds-Karp
+10. Max-Flow / Min-Cut
+11. Bipartite Matching
+12. CO1 Problem Classification
+13. Medical Keyword Search
+14. Exit
+
+Enter choice: 9
+Enter medical word: Asthma
+
+========== MEDICAL KEYWORD SEARCH ==========
+Record 8 : Asthma patient has cough and breathing difficulty
+Record 22 : Asthma may cause cough and breathing problems
+Record 38 : Asthma patients may experience cough
+Record 48 : Asthma causes breathing difficulty and cough
+Record 58 : Asthma causes wheezing and cough
+Record 73 : Asthma patients should avoid triggers
+Record 84 : Asthma may cause difficulty breathing
+Record 96 : Asthma patients may experience chest tightness
+Record 107 : Asthma causes cough and wheezing
+Record 117 : Asthma patients may have breathing difficulty
+Record 128 : Asthma treatment helps control cough
+Record 142 : Asthma can cause cough at night
+Record 157 : Asthma causes cough and breathing difficulty
+Record 167 : Asthma patients may have wheezing
+Record 179 : Asthma may cause chest tightness
+Record 191 : Asthma causes difficulty in breathing
+
+Total Matching Records : 16
+
+Ford-Fulkerson / Edmonds-Karp
+Maximum Flow : 23
+
+================ MENU ================
+1. KMP
+2. Z-Function
+3. Rabin-Karp
+4. Edit Distance
+5. LCS
+6. Subset DP
+7. Interval DP
+8. Bitmask DP
+9. Ford-Fulkerson / Edmonds-Karp
+10. Max-Flow / Min-Cut
+11. Bipartite Matching
+12. CO1 Problem Classification
+13. Medical Keyword Search
+14. Exit
+
+Enter choice: 10
+Enter medical word: regular
+
+========== MEDICAL KEYWORD SEARCH ==========
+Record 9 : Kidney patient requires regular blood tests
+Record 11 : Diabetes requires regular glucose monitoring
+Record 14 : Heart disease requires regular ECG monitoring
+Record 20 : Blood pressure should be checked regularly
+Record 23 : Kidney disease requires regular blood tests
+Record 36 : Heart patients need regular medical checkups
+Record 41 : Diabetes requires regular blood sugar testing
+Record 50 : Diabetes patients require regular monitoring
+Record 59 : High blood pressure requires regular monitoring
+Record 62 : Kidney patients require regular blood tests
+Record 87 : Diabetes patients need regular blood tests
+Record 92 : Blood glucose should be monitored regularly
+Record 102 : Diabetes requires regular blood glucose testing
+Record 108 : Blood pressure should be monitored regularly
+Record 122 : Heart disease requires regular checkups
+Record 125 : Kidney patients need regular health monitoring
+Record 133 : Heart patients should exercise regularly
+Record 152 : Diabetes patients need regular glucose checks
+Record 154 : Kidney patients need regular blood monitoring
+Record 160 : Heart patients require regular checkups
+Record 177 : Diabetes patients should exercise regularly
+Record 181 : Blood pressure needs regular checking
+Record 189 : ECG detects irregular heart rhythm
+Record 194 : Heart patients need regular blood pressure checks
+
+Total Matching Records : 24
+
+Maximum Flow : 23
+Minimum Cut Value : 23
+
+================ MENU ================
+1. KMP
+2. Z-Function
+3. Rabin-Karp
+4. Edit Distance
+5. LCS
+6. Subset DP
+7. Interval DP
+8. Bitmask DP
+9. Ford-Fulkerson / Edmonds-Karp
+10. Max-Flow / Min-Cut
+11. Bipartite Matching
+12. CO1 Problem Classification
+13. Medical Keyword Search
+14. Exit
+
+Enter choice: 14
+
+Program ended.

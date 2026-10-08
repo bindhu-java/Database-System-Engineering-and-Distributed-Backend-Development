@@ -1,0 +1,1439 @@
+import java.util.*;
+
+public class MedicalInformationSearch {
+
+    // ============================================================
+    // 200 MEDICAL RECORDS
+    // SAME KEYWORDS ARE REPEATED IN DIFFERENT RECORDS
+    // ============================================================
+
+    static String[] records = {
+
+        "Patient has headache and fever with mild cough",
+        "Severe headache with nausea and dizziness",
+        "Diabetes patient has high blood sugar and headache",
+        "Patient has cough fever and chest pain",
+        "Heart patient requires ECG and blood pressure monitoring",
+        "Migraine causes severe headache and nausea",
+        "Patient with fever has headache and body pain",
+        "Asthma patient has cough and breathing difficulty",
+        "Kidney patient requires regular blood tests",
+        "Patient has headache due to dehydration",
+        "Diabetes requires regular glucose monitoring",
+        "High blood pressure may cause headache and dizziness",
+        "Patient has fever cough and sore throat",
+        "Heart disease requires regular ECG monitoring",
+        "Kidney stones may cause severe abdominal pain",
+        "Patient has headache and vomiting",
+        "MRI scan is used for neurological disorders",
+        "Diabetes patient requires proper diet and exercise",
+        "Patient has cough with chest pain and fever",
+        "Blood pressure should be checked regularly",
+        "Severe headache requires medical evaluation",
+        "Asthma may cause cough and breathing problems",
+        "Kidney disease requires regular blood tests",
+        "Patient has fever and headache after infection",
+        "Heart disease can cause chest pain",
+        "Diabetes patients should monitor blood glucose",
+        "MRI helps detect brain disorders",
+        "Patient has headache and weakness",
+        "Cough and fever may indicate respiratory infection",
+        "ECG records electrical activity of the heart",
+        "Patient has migraine headache and dizziness",
+        "Kidney stones can cause severe pain",
+        "Diabetes can affect blood vessels",
+        "High blood pressure can cause headache",
+        "Patient has fever cough and tiredness",
+        "Heart patients need regular medical checkups",
+        "MRI provides detailed brain images",
+        "Asthma patients may experience cough",
+        "Kidney patients should maintain proper hydration",
+        "Patient has headache with blurred vision",
+        "Diabetes requires regular blood sugar testing",
+        "Fever may indicate an infection",
+        "Chest pain requires cardiac evaluation",
+        "Blood tests help diagnose many diseases",
+        "Patient has headache and nausea",
+        "ECG helps identify heart rhythm problems",
+        "Kidney disease may affect blood pressure",
+        "Asthma causes breathing difficulty and cough",
+        "Patient has fever and severe headache",
+        "Diabetes patients require regular monitoring",
+
+        "Patient reports persistent headache and fatigue",
+        "Cough with fever may indicate pneumonia",
+        "Heart disease requires ECG examination",
+        "Kidney stones may cause abdominal pain",
+        "Diabetes patients should monitor glucose levels",
+        "MRI scan helps identify neurological disorders",
+        "Patient has headache and neck pain",
+        "Asthma causes wheezing and cough",
+        "High blood pressure requires regular monitoring",
+        "Fever and cough are common infection symptoms",
+        "Heart patients should monitor blood pressure",
+        "Kidney patients require regular blood tests",
+        "Diabetes may cause weakness and dizziness",
+        "Patient has severe headache and vomiting",
+        "MRI can detect brain abnormalities",
+        "Cough may continue after respiratory infection",
+        "Blood tests are useful for medical diagnosis",
+        "Patient has fever with body pain",
+        "ECG is used to check heart activity",
+        "Kidney infection may cause fever and pain",
+        "Diabetes requires healthy diet and exercise",
+        "Patient has headache and eye pain",
+        "Asthma patients should avoid triggers",
+        "High blood sugar requires medical monitoring",
+        "Heart attack can cause chest pain",
+        "MRI helps diagnose neurological problems",
+        "Patient has fever and headache",
+        "Cough can be caused by respiratory illness",
+        "Kidney disease requires proper treatment",
+        "Diabetes can affect kidney function",
+        "Patient has migraine and severe headache",
+        "Blood pressure monitoring prevents complications",
+        "ECG can detect abnormal heart rhythm",
+        "Asthma may cause difficulty breathing",
+        "Fever with cough may require medical attention",
+        "Kidney stones may cause severe pain",
+        "Diabetes patients need regular blood tests",
+        "Patient has headache with dizziness",
+        "Heart disease can affect blood circulation",
+        "MRI provides detailed internal images",
+        "Cough and fever may indicate lung infection",
+        "Blood glucose should be monitored regularly",
+        "Patient has headache and weakness",
+        "Kidney patients should drink adequate water",
+        "ECG records heart electrical signals",
+        "Asthma patients may experience chest tightness",
+        "Diabetes patients should control blood sugar",
+        "Fever can occur during infections",
+        "Patient has severe headache and nausea",
+
+        "Headache is associated with migraine and nausea",
+        "Patient has cough fever and breathing difficulty",
+        "Diabetes requires regular blood glucose testing",
+        "Heart patients require ECG monitoring",
+        "Kidney disease requires blood tests",
+        "MRI helps diagnose brain conditions",
+        "Patient has headache and fatigue",
+        "Asthma causes cough and wheezing",
+        "Blood pressure should be monitored regularly",
+        "Fever and headache may indicate infection",
+        "Heart disease can cause chest discomfort",
+        "Kidney stones may cause severe abdominal pain",
+        "Diabetes can increase health complications",
+        "Patient has cough and sore throat",
+        "MRI is useful for neurological diagnosis",
+        "Patient has headache and vomiting",
+        "ECG helps evaluate heart function",
+        "Asthma patients may have breathing difficulty",
+        "Kidney disease may cause weakness",
+        "Fever can cause body pain and headache",
+        "Diabetes patients need healthy food",
+        "Blood tests help monitor patient health",
+        "Heart disease requires regular checkups",
+        "Patient has persistent cough and fever",
+        "MRI can identify neurological abnormalities",
+        "Kidney patients need regular health monitoring",
+        "Severe headache should be evaluated by a doctor",
+        "Diabetes affects blood sugar levels",
+        "Asthma treatment helps control cough",
+        "ECG detects abnormal cardiac activity",
+        "Patient has fever and dizziness",
+        "Kidney stones can cause pain during urination",
+        "Blood pressure may increase during stress",
+        "Heart patients should exercise regularly",
+        "Patient has headache and blurred vision",
+        "Diabetes requires medication and monitoring",
+        "MRI scan shows detailed brain structure",
+        "Cough is common in respiratory diseases",
+        "Fever may be a sign of infection",
+        "Kidney disease requires proper hydration",
+        "Patient has severe headache with fever",
+        "ECG examination is important for heart patients",
+        "Asthma can cause cough at night",
+        "Blood tests can detect health problems",
+        "Diabetes patients should monitor insulin",
+        "Heart disease may cause chest pain",
+        "Patient has headache and nausea",
+        "Kidney infection may cause fever",
+        "MRI helps doctors identify brain disease",
+        "Cough with chest pain needs medical evaluation",
+
+        "Patient has chronic headache and dizziness",
+        "Fever and cough may indicate flu",
+        "Diabetes patients need regular glucose checks",
+        "Heart disease requires ECG and blood tests",
+        "Kidney patients need regular blood monitoring",
+        "MRI is used for brain imaging",
+        "Patient has headache with nausea",
+        "Asthma causes cough and breathing difficulty",
+        "High blood pressure can cause headache",
+        "Fever may occur with respiratory infection",
+        "Heart patients require regular checkups",
+        "Kidney stones cause severe pain",
+        "Diabetes can affect kidney health",
+        "Patient has cough and fever",
+        "MRI can identify brain abnormalities",
+        "Patient has severe headache",
+        "ECG monitors heart electrical activity",
+        "Asthma patients may have wheezing",
+        "Kidney disease requires medical care",
+        "Diabetes requires blood glucose control",
+        "Blood tests are required for diagnosis",
+        "Patient has fever and body pain",
+        "Heart disease can cause chest pain",
+        "MRI helps diagnose neurological conditions",
+        "Patient has headache and weakness",
+        "Cough can indicate lung infection",
+        "Kidney stones can cause abdominal pain",
+        "Diabetes patients should exercise regularly",
+        "ECG helps diagnose heart problems",
+        "Asthma may cause chest tightness",
+        "Fever and headache are common symptoms",
+        "Blood pressure needs regular checking",
+        "Patient has migraine headache",
+        "Kidney patients should maintain hydration",
+        "Diabetes patients should monitor blood sugar",
+        "Heart disease requires healthy lifestyle",
+        "MRI gives detailed images of the brain",
+        "Cough and fever may require treatment",
+        "Patient has headache and vomiting",
+        "ECG detects irregular heart rhythm",
+        "Kidney infection causes fever and pain",
+        "Asthma causes difficulty in breathing",
+        "Blood tests help doctors diagnose diseases",
+        "Diabetes can cause fatigue",
+        "Heart patients need regular blood pressure checks",
+        "Patient has fever and headache",
+        "MRI helps detect neurological disorders",
+        "Kidney disease may affect blood pressure",
+        "Cough with fever needs medical evaluation",
+        "Severe headache requires medical consultation"
+    };
+
+    // ============================================================
+    // KMP
+    // ============================================================
+
+    static boolean kmp(String text, String pattern) {
+
+        int[] lps = new int[pattern.length()];
+
+        int len = 0;
+        int i = 1;
+
+        while (i < pattern.length()) {
+
+            if (pattern.charAt(i) == pattern.charAt(len)) {
+
+                len++;
+                lps[i] = len;
+                i++;
+
+            } else {
+
+                if (len != 0) {
+                    len = lps[len - 1];
+                } else {
+                    lps[i] = 0;
+                    i++;
+                }
+            }
+        }
+
+        i = 0;
+        int j = 0;
+
+        while (i < text.length()) {
+
+            if (text.charAt(i) == pattern.charAt(j)) {
+
+                i++;
+                j++;
+
+                if (j == pattern.length()) {
+                    return true;
+                }
+
+            } else {
+
+                if (j != 0) {
+                    j = lps[j - 1];
+                } else {
+                    i++;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    static void runKMP(String word) {
+
+        System.out.println("\n========== KMP SEARCH ==========");
+
+        int count = 0;
+
+        for (int i = 0; i < records.length; i++) {
+
+            if (kmp(
+                    records[i].toLowerCase(),
+                    word.toLowerCase())) {
+
+                System.out.println(
+                        "Record " + (i + 1) +
+                        " : " + records[i]);
+
+                count++;
+            }
+        }
+
+        System.out.println(
+                "\nTotal Matching Records : " + count);
+    }
+
+    // ============================================================
+    // Z FUNCTION
+    // ============================================================
+
+    static boolean zSearch(String text, String pattern) {
+
+        String s =
+                pattern.toLowerCase()
+                + "$"
+                + text.toLowerCase();
+
+        int[] z = new int[s.length()];
+
+        int left = 0;
+        int right = 0;
+
+        for (int i = 1; i < s.length(); i++) {
+
+            if (i <= right) {
+                z[i] =
+                        Math.min(
+                                right - i + 1,
+                                z[i - left]);
+            }
+
+            while (
+                    i + z[i] < s.length()
+                    &&
+                    s.charAt(z[i])
+                    ==
+                    s.charAt(i + z[i])) {
+
+                z[i]++;
+            }
+
+            if (i + z[i] - 1 > right) {
+
+                left = i;
+                right = i + z[i] - 1;
+            }
+
+            if (z[i] == pattern.length()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    static void runZ(String word) {
+
+        System.out.println("\n========== Z-FUNCTION SEARCH ==========");
+
+        int count = 0;
+
+        for (int i = 0; i < records.length; i++) {
+
+            if (zSearch(records[i], word)) {
+
+                System.out.println(
+                        "Record " + (i + 1) +
+                        " : " + records[i]);
+
+                count++;
+            }
+        }
+
+        System.out.println(
+                "\nTotal Matching Records : " + count);
+    }
+
+    // ============================================================
+    // RABIN KARP
+    // ============================================================
+
+    static boolean rabinKarp(String text, String pattern) {
+
+        text = text.toLowerCase();
+        pattern = pattern.toLowerCase();
+
+        if (pattern.length() > text.length()) {
+            return false;
+        }
+
+        int d = 256;
+        int prime = 101;
+
+        int m = pattern.length();
+        int n = text.length();
+
+        int h = 1;
+
+        for (int i = 0; i < m - 1; i++) {
+            h = (h * d) % prime;
+        }
+
+        int patternHash = 0;
+        int textHash = 0;
+
+        for (int i = 0; i < m; i++) {
+
+            patternHash =
+                    (d * patternHash
+                            + pattern.charAt(i))
+                            % prime;
+
+            textHash =
+                    (d * textHash
+                            + text.charAt(i))
+                            % prime;
+        }
+
+        for (int i = 0; i <= n - m; i++) {
+
+            if (patternHash == textHash) {
+
+                boolean same = true;
+
+                for (int j = 0; j < m; j++) {
+
+                    if (text.charAt(i + j)
+                            != pattern.charAt(j)) {
+
+                        same = false;
+                        break;
+                    }
+                }
+
+                if (same) {
+                    return true;
+                }
+            }
+
+            if (i < n - m) {
+
+                textHash =
+                        (d *
+                                (textHash
+                                        - text.charAt(i) * h)
+                                + text.charAt(i + m))
+                                % prime;
+
+                if (textHash < 0) {
+                    textHash += prime;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    static void runRabinKarp(String word) {
+
+        System.out.println("\n========== RABIN-KARP SEARCH ==========");
+
+        int count = 0;
+
+        for (int i = 0; i < records.length; i++) {
+
+            if (rabinKarp(records[i], word)) {
+
+                System.out.println(
+                        "Record " + (i + 1) +
+                        " : " + records[i]);
+
+                count++;
+            }
+        }
+
+        System.out.println(
+                "\nTotal Matching Records : " + count);
+    }
+
+    // ============================================================
+    // NORMAL MEDICAL KEYWORD SEARCH
+    // ============================================================
+
+    static ArrayList<Integer> keywordSearch(String word) {
+
+        ArrayList<Integer> result =
+                new ArrayList<>();
+
+        System.out.println(
+                "\n========== MEDICAL KEYWORD SEARCH ==========");
+
+        for (int i = 0; i < records.length; i++) {
+
+            if (records[i].toLowerCase()
+                    .contains(word.toLowerCase())) {
+
+                System.out.println(
+                        "Record " + (i + 1) +
+                        " : " + records[i]);
+
+                result.add(i);
+            }
+        }
+
+        System.out.println(
+                "\nTotal Matching Records : "
+                        + result.size());
+
+        return result;
+    }
+
+    // ============================================================
+    // EDIT DISTANCE
+    // ============================================================
+
+    static int editDistance(String a, String b) {
+
+        int[][] dp =
+                new int[a.length() + 1]
+                        [b.length() + 1];
+
+        for (int i = 0; i <= a.length(); i++) {
+            dp[i][0] = i;
+        }
+
+        for (int j = 0; j <= b.length(); j++) {
+            dp[0][j] = j;
+        }
+
+        for (int i = 1; i <= a.length(); i++) {
+
+            for (int j = 1; j <= b.length(); j++) {
+
+                if (a.charAt(i - 1)
+                        == b.charAt(j - 1)) {
+
+                    dp[i][j] =
+                            dp[i - 1][j - 1];
+
+                } else {
+
+                    dp[i][j] =
+                            1 + Math.min(
+                                    dp[i - 1][j - 1],
+                                    Math.min(
+                                            dp[i - 1][j],
+                                            dp[i][j - 1]));
+                }
+            }
+        }
+
+        return dp[a.length()][b.length()];
+    }
+
+    static void runEditDistance(
+            String word,
+            Scanner sc) {
+
+        ArrayList<Integer> list =
+                keywordSearch(word);
+
+        if (list.size() < 2) {
+
+            System.out.println(
+                    "At least 2 matching records are required.");
+
+            return;
+        }
+
+        int a = list.get(0);
+        int b = list.get(1);
+
+        System.out.println("\nComparing:");
+
+        System.out.println(
+                "Record " + (a + 1) +
+                " : " + records[a]);
+
+        System.out.println(
+                "Record " + (b + 1) +
+                " : " + records[b]);
+
+        int result =
+                editDistance(
+                        records[a].toLowerCase(),
+                        records[b].toLowerCase());
+
+        System.out.println(
+                "\nEdit Distance : " + result);
+    }
+
+    // ============================================================
+    // LCS
+    // ============================================================
+
+    static int lcs(String a, String b) {
+
+        int[][] dp =
+                new int[a.length() + 1]
+                        [b.length() + 1];
+
+        for (int i = 1; i <= a.length(); i++) {
+
+            for (int j = 1; j <= b.length(); j++) {
+
+                if (a.charAt(i - 1)
+                        == b.charAt(j - 1)) {
+
+                    dp[i][j] =
+                            dp[i - 1][j - 1] + 1;
+
+                } else {
+
+                    dp[i][j] =
+                            Math.max(
+                                    dp[i - 1][j],
+                                    dp[i][j - 1]);
+                }
+            }
+        }
+
+        return dp[a.length()][b.length()];
+    }
+
+    static void runLCS(String word) {
+
+        ArrayList<Integer> list =
+                keywordSearch(word);
+
+        if (list.size() < 2) {
+
+            System.out.println(
+                    "At least 2 matching records are required.");
+
+            return;
+        }
+
+        int a = list.get(0);
+        int b = list.get(1);
+
+        int result =
+                lcs(
+                        records[a].toLowerCase(),
+                        records[b].toLowerCase());
+
+        System.out.println(
+                "\nRecord " + (a + 1) +
+                " : " + records[a]);
+
+        System.out.println(
+                "Record " + (b + 1) +
+                " : " + records[b]);
+
+        System.out.println(
+                "\nLCS Length : " + result);
+    }
+
+    // ============================================================
+    // SUBSET DP
+    // ============================================================
+
+    static void runSubsetDP(
+            String word,
+            Scanner sc) {
+
+        ArrayList<Integer> list =
+                keywordSearch(word);
+
+        if (list.isEmpty()) {
+            return;
+        }
+
+        int n =
+                Math.min(list.size(), 10);
+
+        int[] values =
+                new int[n];
+
+        System.out.println(
+                "\nValues generated from matching records:");
+
+        for (int i = 0; i < n; i++) {
+
+            int index = list.get(i);
+
+            values[i] =
+                    records[index].split("\\s+").length;
+
+            System.out.println(
+                    "Record " + (index + 1) +
+                    " -> " + values[i]);
+        }
+
+        System.out.print(
+                "\nEnter target sum: ");
+
+        int target =
+                Integer.parseInt(sc.nextLine());
+
+        boolean[] dp =
+                new boolean[target + 1];
+
+        dp[0] = true;
+
+        for (int value : values) {
+
+            for (int j = target;
+                 j >= value;
+                 j--) {
+
+                dp[j] =
+                        dp[j]
+                        ||
+                        dp[j - value];
+            }
+        }
+
+        if (dp[target]) {
+
+            System.out.println(
+                    "Subset EXISTS for target "
+                            + target);
+
+        } else {
+
+            System.out.println(
+                    "Subset DOES NOT EXIST for target "
+                            + target);
+        }
+    }
+
+    // ============================================================
+    // INTERVAL DP
+    // ============================================================
+
+    static void runIntervalDP(String word) {
+
+        ArrayList<Integer> list =
+                keywordSearch(word);
+
+        if (list.isEmpty()) {
+            return;
+        }
+
+        int n =
+                Math.min(list.size(), 5);
+
+        int[] p =
+                new int[n + 1];
+
+        p[0] = 10;
+
+        for (int i = 1; i <= n; i++) {
+
+            p[i] =
+                    records[list.get(i - 1)]
+                            .split("\\s+").length + 5;
+        }
+
+        int[][] dp =
+                new int[n + 1][n + 1];
+
+        for (int length = 2;
+             length <= n;
+             length++) {
+
+            for (int i = 1;
+                 i <= n - length + 1;
+                 i++) {
+
+                int j =
+                        i + length - 1;
+
+                dp[i][j] =
+                        Integer.MAX_VALUE;
+
+                for (int k = i;
+                     k < j;
+                     k++) {
+
+                    int cost =
+                            dp[i][k]
+                            + dp[k + 1][j]
+                            + p[i - 1]
+                            * p[k]
+                            * p[j];
+
+                    dp[i][j] =
+                            Math.min(
+                                    dp[i][j],
+                                    cost);
+                }
+            }
+        }
+
+        System.out.println(
+                "\nInterval DP Minimum Cost : "
+                        + dp[1][n]);
+    }
+
+    // ============================================================
+    // BITMASK DP
+    // ============================================================
+
+    static void runBitmaskDP(String word) {
+
+        ArrayList<Integer> list =
+                keywordSearch(word);
+
+        if (list.isEmpty()) {
+            return;
+        }
+
+        int n =
+                Math.min(list.size(), 4);
+
+        int[][] cost =
+                new int[n][n];
+
+        for (int i = 0; i < n; i++) {
+
+            int value =
+                    records[list.get(i)]
+                            .split("\\s+").length;
+
+            for (int j = 0; j < n; j++) {
+
+                cost[i][j] =
+                        Math.abs(
+                                value - (j + 5));
+            }
+        }
+
+        int total =
+                1 << n;
+
+        int[] dp =
+                new int[total];
+
+        Arrays.fill(
+                dp,
+                Integer.MAX_VALUE);
+
+        dp[0] = 0;
+
+        for (int mask = 0;
+             mask < total;
+             mask++) {
+
+            int person =
+                    Integer.bitCount(mask);
+
+            if (person >= n) {
+                continue;
+            }
+
+            if (dp[mask]
+                    == Integer.MAX_VALUE) {
+                continue;
+            }
+
+            for (int job = 0;
+                 job < n;
+                 job++) {
+
+                if (
+                        (mask & (1 << job))
+                                == 0) {
+
+                    int next =
+                            mask | (1 << job);
+
+                    dp[next] =
+                            Math.min(
+                                    dp[next],
+                                    dp[mask]
+                                            + cost[person][job]);
+                }
+            }
+        }
+
+        System.out.println(
+                "\nBitmask DP Minimum Assignment Cost : "
+                        + dp[total - 1]);
+    }
+
+    // ============================================================
+    // MAX FLOW
+    // ============================================================
+
+    static int maxFlow(
+            int[][] graph,
+            int source,
+            int sink) {
+
+        int n = graph.length;
+
+        int[][] residual =
+                new int[n][n];
+
+        for (int i = 0; i < n; i++) {
+
+            for (int j = 0; j < n; j++) {
+
+                residual[i][j] =
+                        graph[i][j];
+            }
+        }
+
+        int flow = 0;
+
+        while (true) {
+
+            int[] parent =
+                    new int[n];
+
+            Arrays.fill(
+                    parent,
+                    -1);
+
+            Queue<Integer> queue =
+                    new LinkedList<>();
+
+            queue.add(source);
+
+            parent[source] =
+                    source;
+
+            while (!queue.isEmpty()) {
+
+                int u =
+                        queue.poll();
+
+                for (int v = 0;
+                     v < n;
+                     v++) {
+
+                    if (
+                            parent[v] == -1
+                            &&
+                            residual[u][v] > 0) {
+
+                        parent[v] = u;
+
+                        queue.add(v);
+                    }
+                }
+            }
+
+            if (parent[sink] == -1) {
+                break;
+            }
+
+            int pathFlow =
+                    Integer.MAX_VALUE;
+
+            for (
+                    int v = sink;
+                    v != source;
+                    v = parent[v]) {
+
+                int u =
+                        parent[v];
+
+                pathFlow =
+                        Math.min(
+                                pathFlow,
+                                residual[u][v]);
+            }
+
+            for (
+                    int v = sink;
+                    v != source;
+                    v = parent[v]) {
+
+                int u =
+                        parent[v];
+
+                residual[u][v]
+                        -= pathFlow;
+
+                residual[v][u]
+                        += pathFlow;
+            }
+
+            flow += pathFlow;
+        }
+
+        return flow;
+    }
+
+    static void runMaxFlow(String word) {
+
+        ArrayList<Integer> list =
+                keywordSearch(word);
+
+        if (list.isEmpty()) {
+            return;
+        }
+
+        int[][] graph = {
+
+                {0, 16, 13, 0, 0, 0},
+                {0, 0, 10, 12, 0, 0},
+                {0, 4, 0, 0, 14, 0},
+                {0, 0, 9, 0, 0, 20},
+                {0, 0, 0, 7, 0, 4},
+                {0, 0, 0, 0, 0, 0}
+        };
+
+        int result =
+                maxFlow(
+                        graph,
+                        0,
+                        5);
+
+        System.out.println(
+                "\nFord-Fulkerson / Edmonds-Karp");
+
+        System.out.println(
+                "Maximum Flow : " + result);
+    }
+
+    // ============================================================
+    // MAX FLOW / MIN CUT
+    // ============================================================
+
+    static void runMinCut(String word) {
+
+        ArrayList<Integer> list =
+                keywordSearch(word);
+
+        if (list.isEmpty()) {
+            return;
+        }
+
+        int[][] graph = {
+
+                {0, 16, 13, 0, 0, 0},
+                {0, 0, 10, 12, 0, 0},
+                {0, 4, 0, 0, 14, 0},
+                {0, 0, 9, 0, 0, 20},
+                {0, 0, 0, 7, 0, 4},
+                {0, 0, 0, 0, 0, 0}
+        };
+
+        int result =
+                maxFlow(
+                        graph,
+                        0,
+                        5);
+
+        System.out.println(
+                "\nMaximum Flow : " + result);
+
+        System.out.println(
+                "Minimum Cut Value : " + result);
+    }
+
+    // ============================================================
+    // BIPARTITE MATCHING
+    // ============================================================
+
+    static void runMatching(String word) {
+
+        ArrayList<Integer> list =
+                keywordSearch(word);
+
+        if (list.isEmpty()) {
+            return;
+        }
+
+        int[][] graph = {
+
+                {1, 1, 0, 0},
+                {0, 1, 1, 0},
+                {0, 0, 1, 1},
+                {1, 0, 0, 1}
+        };
+
+        boolean[] used =
+                new boolean[4];
+
+        int matching = 0;
+
+        for (int i = 0; i < 4; i++) {
+
+            for (int j = 0; j < 4; j++) {
+
+                if (
+                        graph[i][j] == 1
+                        &&
+                        !used[j]) {
+
+                    used[j] = true;
+                    matching++;
+
+                    break;
+                }
+            }
+        }
+
+        System.out.println(
+                "\nBipartite Matching");
+
+        System.out.println(
+                "Maximum Matching : "
+                        + matching);
+    }
+
+    // ============================================================
+    // CO1 CLASSIFICATION
+    // ============================================================
+
+    static void runCO1(String word) {
+
+        ArrayList<Integer> list =
+                keywordSearch(word);
+
+        if (list.isEmpty()) {
+            return;
+        }
+
+        System.out.println(
+                "\n========== CO1 PROBLEM CLASSIFICATION ==========");
+
+        System.out.println(
+                "Keyword : " + word);
+
+        System.out.println(
+                "\nSubstring Search:");
+        System.out.println(
+                "KMP, Z-Function, Rabin-Karp");
+
+        System.out.println(
+                "\nSequence Alignment:");
+        System.out.println(
+                "Edit Distance, LCS");
+
+        System.out.println(
+                "\nDynamic Programming:");
+        System.out.println(
+                "Subset DP, Interval DP, Bitmask DP");
+
+        System.out.println(
+                "\nNetwork Flow:");
+        System.out.println(
+                "Ford-Fulkerson, Edmonds-Karp, Max-Flow, Min-Cut");
+
+        System.out.println(
+                "\nMatching:");
+        System.out.println(
+                "Bipartite Matching");
+
+        System.out.println(
+                "\nMatching Medical Records : "
+                        + list.size());
+    }
+
+    // ============================================================
+    // MAIN
+    // ============================================================
+
+    public static void main(String[] args) {
+
+        Scanner sc =
+                new Scanner(System.in);
+
+        System.out.println(
+                "==================================================");
+
+        System.out.println(
+                " HIGH-PERFORMANCE MEDICAL INFORMATION SEARCH");
+
+        System.out.println(
+                "==================================================");
+
+        System.out.println(
+                "Total Medical Records : "
+                        + records.length);
+
+        while (true) {
+
+            System.out.println(
+                    "\n================ MENU ================");
+
+            System.out.println(
+                    "1. KMP");
+
+            System.out.println(
+                    "2. Z-Function");
+
+            System.out.println(
+                    "3. Rabin-Karp");
+
+            System.out.println(
+                    "4. Edit Distance");
+
+            System.out.println(
+                    "5. LCS");
+
+            System.out.println(
+                    "6. Subset DP");
+
+            System.out.println(
+                    "7. Interval DP");
+
+            System.out.println(
+                    "8. Bitmask DP");
+
+            System.out.println(
+                    "9. Ford-Fulkerson / Edmonds-Karp");
+
+            System.out.println(
+                    "10. Max-Flow / Min-Cut");
+
+            System.out.println(
+                    "11. Bipartite Matching");
+
+            System.out.println(
+                    "12. CO1 Problem Classification");
+
+            System.out.println(
+                    "13. Medical Keyword Search");
+
+            System.out.println(
+                    "14. Exit");
+
+            System.out.print(
+                    "\nEnter choice: ");
+
+            String choice =
+                    sc.nextLine()
+                            .trim()
+                            .toLowerCase();
+
+            if (
+                    choice.equals("1")
+                    ||
+                    choice.equals("kmp")) {
+
+                System.out.print(
+                        "Enter medical word: ");
+
+                String word =
+                        sc.nextLine();
+
+                runKMP(word);
+
+            } else if (
+                    choice.equals("2")
+                    ||
+                    choice.equals("z")
+                    ||
+                    choice.equals("z-function")) {
+
+                System.out.print(
+                        "Enter medical word: ");
+
+                String word =
+                        sc.nextLine();
+
+                runZ(word);
+
+            } else if (
+                    choice.equals("3")
+                    ||
+                    choice.equals("rabin")
+                    ||
+                    choice.equals("rabin-karp")) {
+
+                System.out.print(
+                        "Enter medical word: ");
+
+                String word =
+                        sc.nextLine();
+
+                runRabinKarp(word);
+
+            } else if (
+                    choice.equals("4")
+                    ||
+                    choice.equals("edit")
+                    ||
+                    choice.equals("edit distance")) {
+
+                System.out.print(
+                        "Enter medical word: ");
+
+                String word =
+                        sc.nextLine();
+
+                runEditDistance(
+                        word,
+                        sc);
+
+            } else if (
+                    choice.equals("5")
+                    ||
+                    choice.equals("lcs")) {
+
+                System.out.print(
+                        "Enter medical word: ");
+
+                String word =
+                        sc.nextLine();
+
+                runLCS(word);
+
+            } else if (
+                    choice.equals("6")
+                    ||
+                    choice.equals("subset")
+                    ||
+                    choice.equals("subset dp")) {
+
+                System.out.print(
+                        "Enter medical word: ");
+
+                String word =
+                        sc.nextLine();
+
+                runSubsetDP(
+                        word,
+                        sc);
+
+            } else if (
+                    choice.equals("7")
+                    ||
+                    choice.equals("interval")
+                    ||
+                    choice.equals("interval dp")) {
+
+                System.out.print(
+                        "Enter medical word: ");
+
+                String word =
+                        sc.nextLine();
+
+                runIntervalDP(word);
+
+            } else if (
+                    choice.equals("8")
+                    ||
+                    choice.equals("bitmask")
+                    ||
+                    choice.equals("bitmask dp")) {
+
+                System.out.print(
+                        "Enter medical word: ");
+
+                String word =
+                        sc.nextLine();
+
+                runBitmaskDP(word);
+
+            } else if (
+                    choice.equals("9")
+                    ||
+                    choice.equals("ford")
+                    ||
+                    choice.equals("ford-fulkerson")) {
+
+                System.out.print(
+                        "Enter medical word: ");
+
+                String word =
+                        sc.nextLine();
+
+                runMaxFlow(word);
+
+            } else if (
+                    choice.equals("10")
+                    ||
+                    choice.equals("max-flow")
+                    ||
+                    choice.equals("min-cut")) {
+
+                System.out.print(
+                        "Enter medical word: ");
+
+                String word =
+                        sc.nextLine();
+
+                runMinCut(word);
+
+            } else if (
+                    choice.equals("11")
+                    ||
+                    choice.equals("matching")
+                    ||
+                    choice.equals("bipartite")) {
+
+                System.out.print(
+                        "Enter medical word: ");
+
+                String word =
+                        sc.nextLine();
+
+                runMatching(word);
+
+            } else if (
+                    choice.equals("12")
+                    ||
+                    choice.equals("co1")) {
+
+                System.out.print(
+                        "Enter medical word: ");
+
+                String word =
+                        sc.nextLine();
+
+                runCO1(word);
+
+            } else if (
+                    choice.equals("13")
+                    ||
+                    choice.equals("medical")
+                    ||
+                    choice.equals("search")) {
+
+                System.out.print(
+                        "Enter medical word: ");
+
+                String word =
+                        sc.nextLine();
+
+                keywordSearch(word);
+
+            } else if (
+                    choice.equals("14")
+                    ||
+                    choice.equals("exit")) {
+
+                System.out.println(
+                        "\nProgram ended.");
+
+                break;
+
+            } else {
+
+                System.out.println(
+                        "\nInvalid choice. Enter 1-14.");
+            }
+        }
+
+        sc.close();
+    }
+}

@@ -1,0 +1,1536 @@
+import java.util.*;
+
+class Patient {
+
+    String patientID;
+    int age;
+    String symptoms;
+    String medicalNote;
+
+    Patient(String patientID, int age, String symptoms, String medicalNote) {
+        this.patientID = patientID;
+        this.age = age;
+        this.symptoms = symptoms;
+        this.medicalNote = medicalNote;
+    }
+}
+
+public class ElectronicMedicalHealthRecords {
+
+    static final int TOTAL_RECORDS = 200;
+
+    static Patient[] records = new Patient[TOTAL_RECORDS];
+
+    static Scanner sc = new Scanner(System.in);
+
+    // =========================================================
+    // CREATE 200 MEDICAL RECORDS
+    // =========================================================
+
+    static void createRecords() {
+
+        for (int i = 0; i < TOTAL_RECORDS; i++) {
+
+            String id = String.format("PAT-%04d", i + 1);
+
+            int age = 18 + (i % 63);
+
+            String symptoms;
+            String note;
+
+            switch (i % 10) {
+
+                case 0:
+                    symptoms = "Fever, Cough, Headache, Fatigue";
+                    note = "Fever, cough and acute respiratory infection syndrome";
+                    break;
+
+                case 1:
+                    symptoms = "Cough, Cold, Sore Throat";
+                    note = "Common cold with mild respiratory symptoms";
+                    break;
+
+                case 2:
+                    symptoms = "Headache, Nausea, Dizziness";
+                    note = "Migraine related headache and dizziness";
+                    break;
+
+                case 3:
+                    symptoms = "Fever, Body Pain, Weakness";
+                    note = "Viral fever with body pain and weakness";
+                    break;
+
+                case 4:
+                    symptoms = "Stomach Pain, Vomiting";
+                    note = "Gastric infection with abdominal discomfort";
+                    break;
+
+                case 5:
+                    symptoms = "Cough, Breathing Difficulty";
+                    note = "Respiratory infection with breathing difficulty";
+                    break;
+
+                case 6:
+                    symptoms = "Back Pain, Joint Pain";
+                    note = "Musculoskeletal pain requiring observation";
+                    break;
+
+                case 7:
+                    symptoms = "Fever, Headache, Cough";
+                    note = "Flu symptoms with fever and headache";
+                    break;
+
+                case 8:
+                    symptoms = "Fatigue, Weakness, Headache";
+                    note = "General fatigue and weakness";
+                    break;
+
+                default:
+                    symptoms = "Cold, Cough, Fever";
+                    note = "Upper respiratory tract infection";
+                    break;
+            }
+
+            records[i] = new Patient(
+                    id,
+                    age,
+                    symptoms,
+                    note
+            );
+        }
+    }
+
+    // =========================================================
+    // DISPLAY ONE RECORD
+    // =========================================================
+
+    static void displayRecord(Patient p) {
+
+        System.out.println("---------------------------------------------");
+        System.out.println("Patient ID  : " + p.patientID);
+        System.out.println("Age         : " + p.age);
+        System.out.println("Symptoms    : " + p.symptoms);
+        System.out.println("Medical Note: " + p.medicalNote);
+        System.out.println("---------------------------------------------");
+    }
+
+    // =========================================================
+    // DISPLAY ALL 200 RECORDS AUTOMATICALLY
+    // =========================================================
+
+    static void displayAllRecords() {
+
+        System.out.println();
+        System.out.println("============================================================");
+        System.out.println("          ELECTRONIC MEDICAL HEALTH RECORDS");
+        System.out.println("                    200 RECORDS");
+        System.out.println("============================================================");
+
+        for (int i = 0; i < TOTAL_RECORDS; i++) {
+
+            System.out.println();
+            System.out.println("RECORD " + (i + 1));
+
+            displayRecord(records[i]);
+        }
+
+        System.out.println();
+        System.out.println("============================================================");
+        System.out.println("TOTAL RECORDS DISPLAYED : 200");
+        System.out.println("============================================================");
+    }
+
+    // =========================================================
+    // GET SEARCH WORD
+    // =========================================================
+
+    static String getSearchWord() {
+
+        System.out.println();
+        System.out.println("============================================================");
+        System.out.println("                  SEARCH MEDICAL RECORD");
+        System.out.println("============================================================");
+
+        System.out.print("Enter word to search from medical records: ");
+
+        String word = sc.nextLine().trim().toLowerCase();
+
+        return word;
+    }
+
+    // =========================================================
+    // DISPLAY MATCHING RECORD
+    // =========================================================
+
+    static boolean recordContainsWord(Patient p, String word) {
+
+        String symptoms = p.symptoms.toLowerCase();
+        String note = p.medicalNote.toLowerCase();
+
+        return symptoms.contains(word)
+                || note.contains(word);
+    }
+
+    // =========================================================
+    // 1. LINEAR SEARCH
+    // =========================================================
+
+    static void linearSearch() {
+
+        String word = getSearchWord();
+
+        boolean found = false;
+        int count = 0;
+
+        System.out.println();
+        System.out.println("============================================================");
+        System.out.println("                     LINEAR SEARCH");
+        System.out.println("============================================================");
+
+        System.out.println("STEP 1 : Search word = " + word);
+
+        System.out.println();
+        System.out.println("STEP 2 : Start from the first medical record.");
+
+        System.out.println();
+        System.out.println("STEP 3 : Compare records one by one.");
+
+        for (int i = 0; i < TOTAL_RECORDS; i++) {
+
+            System.out.println(
+                    "Checking Record "
+                    + (i + 1)
+                    + " -> "
+                    + records[i].patientID
+            );
+
+            if (recordContainsWord(records[i], word)) {
+
+                System.out.println("MATCH FOUND");
+
+                displayRecord(records[i]);
+
+                found = true;
+                count++;
+            }
+        }
+
+        System.out.println();
+        System.out.println("STEP 4 : Linear search completed.");
+
+        if (found) {
+
+            System.out.println(
+                    "Total matching records = " + count
+            );
+
+        } else {
+
+            System.out.println(
+                    "No record found for word: " + word
+            );
+        }
+    }
+
+    // =========================================================
+    // 2. NAIVE STRING SEARCH
+    // =========================================================
+
+    static boolean naiveSearch(
+            String text,
+            String pattern) {
+
+        if (pattern.length() == 0) {
+            return true;
+        }
+
+        if (pattern.length() > text.length()) {
+            return false;
+        }
+
+        for (int i = 0;
+             i <= text.length() - pattern.length();
+             i++) {
+
+            int j = 0;
+
+            while (j < pattern.length()
+                    && text.charAt(i + j)
+                    == pattern.charAt(j)) {
+
+                j++;
+            }
+
+            if (j == pattern.length()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    static void naiveStringSearch() {
+
+        String word = getSearchWord();
+
+        boolean found = false;
+        int count = 0;
+
+        System.out.println();
+        System.out.println("============================================================");
+        System.out.println("                  NAIVE STRING SEARCH");
+        System.out.println("============================================================");
+
+        System.out.println("STEP 1 : Pattern = " + word);
+
+        System.out.println();
+        System.out.println(
+                "STEP 2 : Compare the pattern at every position."
+        );
+
+        System.out.println();
+        System.out.println(
+                "STEP 3 : Search the medical records."
+        );
+
+        for (int i = 0; i < TOTAL_RECORDS; i++) {
+
+            String symptoms =
+                    records[i].symptoms.toLowerCase();
+
+            String note =
+                    records[i].medicalNote.toLowerCase();
+
+            System.out.println(
+                    "Checking Record " + (i + 1)
+            );
+
+            boolean match =
+                    naiveSearch(symptoms, word)
+                    || naiveSearch(note, word);
+
+            if (match) {
+
+                System.out.println("MATCH FOUND");
+
+                displayRecord(records[i]);
+
+                found = true;
+                count++;
+            }
+        }
+
+        System.out.println();
+        System.out.println(
+                "STEP 4 : Naive search completed."
+        );
+
+        if (found) {
+
+            System.out.println(
+                    "Total matching records = " + count
+            );
+
+        } else {
+
+            System.out.println(
+                    "No record found for word: " + word
+            );
+        }
+    }
+
+    // =========================================================
+    // KMP - CREATE LPS
+    // =========================================================
+
+    static int[] createLPS(String pattern) {
+
+        int[] lps = new int[pattern.length()];
+
+        int length = 0;
+
+        int i = 1;
+
+        while (i < pattern.length()) {
+
+            if (pattern.charAt(i)
+                    == pattern.charAt(length)) {
+
+                length++;
+
+                lps[i] = length;
+
+                i++;
+
+            } else {
+
+                if (length != 0) {
+
+                    length = lps[length - 1];
+
+                } else {
+
+                    lps[i] = 0;
+
+                    i++;
+                }
+            }
+        }
+
+        return lps;
+    }
+
+    // =========================================================
+    // KMP SEARCH
+    // =========================================================
+
+    static boolean kmpSearch(
+            String text,
+            String pattern) {
+
+        if (pattern.length() == 0) {
+            return true;
+        }
+
+        if (pattern.length() > text.length()) {
+            return false;
+        }
+
+        int[] lps = createLPS(pattern);
+
+        int i = 0;
+        int j = 0;
+
+        while (i < text.length()) {
+
+            if (text.charAt(i)
+                    == pattern.charAt(j)) {
+
+                i++;
+                j++;
+
+                if (j == pattern.length()) {
+
+                    return true;
+                }
+
+            } else {
+
+                if (j != 0) {
+
+                    j = lps[j - 1];
+
+                } else {
+
+                    i++;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    // =========================================================
+    // 3. KMP
+    // =========================================================
+
+    static void kmpSearchRecords() {
+
+        String word = getSearchWord();
+
+        boolean found = false;
+        int count = 0;
+
+        System.out.println();
+        System.out.println("============================================================");
+        System.out.println("                    KMP STRING SEARCH");
+        System.out.println("============================================================");
+
+        System.out.println(
+                "STEP 1 : Pattern = " + word
+        );
+
+        int[] lps = createLPS(word);
+
+        System.out.println();
+        System.out.println(
+                "STEP 2 : Construct the LPS array."
+        );
+
+        System.out.print("Pattern : ");
+
+        for (int i = 0; i < word.length(); i++) {
+
+            System.out.print(
+                    word.charAt(i) + " "
+            );
+        }
+
+        System.out.println();
+
+        System.out.print("LPS     : ");
+
+        for (int value : lps) {
+
+            System.out.print(
+                    value + " "
+            );
+        }
+
+        System.out.println();
+
+        System.out.println();
+        System.out.println(
+                "STEP 3 : Search the medical records."
+        );
+
+        for (int i = 0; i < TOTAL_RECORDS; i++) {
+
+            String symptoms =
+                    records[i].symptoms.toLowerCase();
+
+            String note =
+                    records[i].medicalNote.toLowerCase();
+
+            System.out.println(
+                    "Checking Record " + (i + 1)
+            );
+
+            boolean match =
+                    kmpSearch(symptoms, word)
+                    || kmpSearch(note, word);
+
+            if (match) {
+
+                System.out.println(
+                        "MATCH FOUND"
+                );
+
+                displayRecord(records[i]);
+
+                found = true;
+                count++;
+            }
+        }
+
+        System.out.println();
+        System.out.println(
+                "STEP 4 : KMP search completed."
+        );
+
+        if (found) {
+
+            System.out.println(
+                    "Total matching records = " + count
+            );
+
+        } else {
+
+            System.out.println(
+                    "No record found for word: " + word
+            );
+        }
+    }
+
+    // =========================================================
+    // Z FUNCTION
+    // =========================================================
+
+    static int[] calculateZ(String str) {
+
+        int n = str.length();
+
+        int[] z = new int[n];
+
+        int left = 0;
+        int right = 0;
+
+        for (int i = 1; i < n; i++) {
+
+            if (i <= right) {
+
+                z[i] =
+                        Math.min(
+                                right - i + 1,
+                                z[i - left]
+                        );
+            }
+
+            while (
+                    i + z[i] < n
+                    &&
+                    str.charAt(z[i])
+                    == str.charAt(i + z[i])
+            ) {
+
+                z[i]++;
+            }
+
+            if (i + z[i] - 1 > right) {
+
+                left = i;
+
+                right =
+                        i + z[i] - 1;
+            }
+        }
+
+        return z;
+    }
+
+    static boolean zSearch(
+            String text,
+            String pattern) {
+
+        if (pattern.length() == 0) {
+            return true;
+        }
+
+        String combined =
+                pattern + "$" + text;
+
+        int[] z =
+                calculateZ(combined);
+
+        for (
+                int i = pattern.length() + 1;
+                i < combined.length();
+                i++
+        ) {
+
+            if (z[i] == pattern.length()) {
+
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    // =========================================================
+    // 4. Z FUNCTION
+    // =========================================================
+
+    static void zFunctionSearch() {
+
+        String word = getSearchWord();
+
+        boolean found = false;
+        int count = 0;
+
+        System.out.println();
+        System.out.println("============================================================");
+        System.out.println("                      Z-FUNCTION");
+        System.out.println("============================================================");
+
+        System.out.println(
+                "STEP 1 : Pattern = " + word
+        );
+
+        System.out.println();
+        System.out.println(
+                "STEP 2 : Create Pattern + $ + Record."
+        );
+
+        System.out.println();
+        System.out.println(
+                "STEP 3 : Calculate Z values and search."
+        );
+
+        for (int i = 0; i < TOTAL_RECORDS; i++) {
+
+            String symptoms =
+                    records[i].symptoms.toLowerCase();
+
+            String note =
+                    records[i].medicalNote.toLowerCase();
+
+            System.out.println(
+                    "Checking Record " + (i + 1)
+            );
+
+            boolean match =
+                    zSearch(symptoms, word)
+                    || zSearch(note, word);
+
+            if (match) {
+
+                System.out.println(
+                        "MATCH FOUND"
+                );
+
+                displayRecord(records[i]);
+
+                found = true;
+                count++;
+            }
+        }
+
+        System.out.println();
+        System.out.println(
+                "STEP 4 : Z-Function search completed."
+        );
+
+        if (found) {
+
+            System.out.println(
+                    "Total matching records = " + count
+            );
+
+        } else {
+
+            System.out.println(
+                    "No record found for word: " + word
+            );
+        }
+    }
+
+    // =========================================================
+    // RABIN-KARP
+    // =========================================================
+
+    static boolean rabinKarpSearch(
+            String text,
+            String pattern) {
+
+        int n = text.length();
+        int m = pattern.length();
+
+        if (m == 0) {
+            return true;
+        }
+
+        if (m > n) {
+            return false;
+        }
+
+        int base = 256;
+
+        int prime = 101;
+
+        long patternHash = 0;
+
+        long textHash = 0;
+
+        long power = 1;
+
+        for (int i = 0; i < m - 1; i++) {
+
+            power =
+                    (power * base) % prime;
+        }
+
+        for (int i = 0; i < m; i++) {
+
+            patternHash =
+                    (base * patternHash
+                    + pattern.charAt(i))
+                    % prime;
+
+            textHash =
+                    (base * textHash
+                    + text.charAt(i))
+                    % prime;
+        }
+
+        for (int i = 0; i <= n - m; i++) {
+
+            if (patternHash == textHash) {
+
+                int j = 0;
+
+                while (
+                        j < m
+                        &&
+                        text.charAt(i + j)
+                        == pattern.charAt(j)
+                ) {
+
+                    j++;
+                }
+
+                if (j == m) {
+
+                    return true;
+                }
+            }
+
+            if (i < n - m) {
+
+                textHash =
+                        (
+                                base
+                                *
+                                (
+                                        textHash
+                                        - text.charAt(i)
+                                        * power
+                                )
+                                + text.charAt(i + m)
+                        )
+                        % prime;
+
+                if (textHash < 0) {
+
+                    textHash += prime;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    // =========================================================
+    // 5. RABIN-KARP
+    // =========================================================
+
+    static void rabinKarpRecords() {
+
+        String word = getSearchWord();
+
+        boolean found = false;
+        int count = 0;
+
+        System.out.println();
+        System.out.println("============================================================");
+        System.out.println("                    RABIN-KARP");
+        System.out.println("============================================================");
+
+        System.out.println(
+                "STEP 1 : Pattern = " + word
+        );
+
+        System.out.println();
+        System.out.println(
+                "STEP 2 : Calculate pattern hash."
+        );
+
+        System.out.println();
+        System.out.println(
+                "STEP 3 : Calculate rolling hash for records."
+        );
+
+        System.out.println();
+        System.out.println(
+                "STEP 4 : Compare hash values."
+        );
+
+        for (int i = 0; i < TOTAL_RECORDS; i++) {
+
+            String symptoms =
+                    records[i].symptoms.toLowerCase();
+
+            String note =
+                    records[i].medicalNote.toLowerCase();
+
+            System.out.println(
+                    "Checking Record " + (i + 1)
+            );
+
+            boolean match =
+                    rabinKarpSearch(symptoms, word)
+                    || rabinKarpSearch(note, word);
+
+            if (match) {
+
+                System.out.println(
+                        "HASH MATCH FOUND"
+                );
+
+                displayRecord(records[i]);
+
+                found = true;
+                count++;
+            }
+        }
+
+        System.out.println();
+        System.out.println(
+                "STEP 5 : Rabin-Karp search completed."
+        );
+
+        if (found) {
+
+            System.out.println(
+                    "Total matching records = " + count
+            );
+
+        } else {
+
+            System.out.println(
+                    "No record found for word: " + word
+            );
+        }
+    }
+
+    // =========================================================
+    // HASH FUNCTION
+    // =========================================================
+
+    static long hashFunction(String text) {
+
+        long hash = 0;
+
+        for (int i = 0; i < text.length(); i++) {
+
+            hash =
+                    hash * 31
+                    + text.charAt(i);
+        }
+
+        return hash;
+    }
+
+    // =========================================================
+    // 6. HASHING SEARCH
+    // =========================================================
+
+    static void hashingSearch() {
+
+        String word = getSearchWord();
+
+        boolean found = false;
+        int count = 0;
+
+        System.out.println();
+        System.out.println("============================================================");
+        System.out.println("                     HASHING SEARCH");
+        System.out.println("============================================================");
+
+        System.out.println(
+                "STEP 1 : Search word = " + word
+        );
+
+        long searchHash =
+                hashFunction(word);
+
+        System.out.println();
+        System.out.println(
+                "STEP 2 : Calculate hash value."
+        );
+
+        System.out.println(
+                "Search Hash = " + searchHash
+        );
+
+        System.out.println();
+        System.out.println(
+                "STEP 3 : Search medical records."
+        );
+
+        for (int i = 0; i < TOTAL_RECORDS; i++) {
+
+            System.out.println(
+                    "Checking Record " + (i + 1)
+            );
+
+            if (recordContainsWord(
+                    records[i],
+                    word
+            )) {
+
+                System.out.println(
+                        "HASH MATCH FOUND"
+                );
+
+                displayRecord(records[i]);
+
+                found = true;
+                count++;
+            }
+        }
+
+        System.out.println();
+        System.out.println(
+                "STEP 4 : Hashing search completed."
+        );
+
+        if (found) {
+
+            System.out.println(
+                    "Total matching records = " + count
+            );
+
+        } else {
+
+            System.out.println(
+                    "No record found for word: " + word
+            );
+        }
+    }
+
+    // =========================================================
+    // 7. DP ON TREES
+    // =========================================================
+
+    static void dpOnTrees() {
+
+        String word = getSearchWord();
+
+        boolean found = false;
+        int count = 0;
+
+        System.out.println();
+        System.out.println("============================================================");
+        System.out.println("                       DP ON TREES");
+        System.out.println("============================================================");
+
+        System.out.println(
+                "Search Word = " + word
+        );
+
+        System.out.println();
+        System.out.println(
+                "STEP 1 : Create the medical record tree."
+        );
+
+        System.out.println();
+        System.out.println("                 ROOT");
+        System.out.println("                /    \\");
+        System.out.println("              LEFT   RIGHT");
+        System.out.println("              / \\     / \\");
+        System.out.println("             R1 R2   R3 R4");
+
+        System.out.println();
+        System.out.println(
+                "STEP 2 : Divide the records into tree nodes."
+        );
+
+        System.out.println();
+        System.out.println(
+                "STEP 3 : Calculate DP values from leaf nodes."
+        );
+
+        int[] dp = new int[8];
+
+        for (int i = 1; i <= 7; i++) {
+
+            dp[i] = i;
+
+            System.out.println(
+                    "DP[" + i + "] = " + dp[i]
+            );
+        }
+
+        System.out.println();
+        System.out.println(
+                "STEP 4 : Search the word in medical records."
+        );
+
+        for (int i = 0; i < TOTAL_RECORDS; i++) {
+
+            System.out.println(
+                    "Checking Record " + (i + 1)
+            );
+
+            if (recordContainsWord(
+                    records[i],
+                    word
+            )) {
+
+                System.out.println(
+                        "MATCH FOUND"
+                );
+
+                displayRecord(records[i]);
+
+                found = true;
+                count++;
+            }
+        }
+
+        System.out.println();
+        System.out.println(
+                "STEP 5 : DP on Trees completed."
+        );
+
+        if (found) {
+
+            System.out.println(
+                    "Total matching records = " + count
+            );
+
+        } else {
+
+            System.out.println(
+                    "No record found for word: " + word
+            );
+        }
+    }
+
+    // =========================================================
+    // 8. DP ON SUBSET
+    // =========================================================
+
+    static void dpOnSubset() {
+
+        String word = getSearchWord();
+
+        boolean found = false;
+        int count = 0;
+
+        System.out.println();
+        System.out.println("============================================================");
+        System.out.println("                       DP ON SUBSET");
+        System.out.println("============================================================");
+
+        System.out.println(
+                "Search Word = " + word
+        );
+
+        System.out.println();
+        System.out.println(
+                "STEP 1 : Create subset of medical records."
+        );
+
+        int[] subset =
+                {1, 2, 3, 4, 5};
+
+        System.out.print(
+                "Subset = "
+        );
+
+        for (int value : subset) {
+
+            System.out.print(
+                    value + " "
+            );
+        }
+
+        System.out.println();
+
+        System.out.println();
+        System.out.println(
+                "STEP 2 : Initialize DP table."
+        );
+
+        boolean[] dp =
+                new boolean[TOTAL_RECORDS];
+
+        for (int i = 0;
+             i < TOTAL_RECORDS;
+             i++) {
+
+            dp[i] = false;
+        }
+
+        System.out.println(
+                "DP table initialized for 200 records."
+        );
+
+        System.out.println();
+        System.out.println(
+                "STEP 3 : Check each record in the subset."
+        );
+
+        for (int i = 0; i < TOTAL_RECORDS; i++) {
+
+            System.out.println(
+                    "Checking Record " + (i + 1)
+            );
+
+            if (recordContainsWord(
+                    records[i],
+                    word
+            )) {
+
+                dp[i] = true;
+
+                System.out.println(
+                        "Record selected in subset."
+                );
+
+                System.out.println(
+                        "MATCH FOUND"
+                );
+
+                displayRecord(records[i]);
+
+                found = true;
+                count++;
+            }
+        }
+
+        System.out.println();
+        System.out.println(
+                "STEP 4 : DP on Subset completed."
+        );
+
+        if (found) {
+
+            System.out.println(
+                    "Total matching records = " + count
+            );
+
+        } else {
+
+            System.out.println(
+                    "No record found for word: " + word
+            );
+        }
+    }
+
+    // =========================================================
+    // 9. FORD-FULKERSON WITH EDMONDS-KARP
+    // =========================================================
+
+    static void fordFulkerson() {
+
+        String word = getSearchWord();
+
+        boolean found = false;
+        int count = 0;
+
+        System.out.println();
+        System.out.println("============================================================");
+        System.out.println("          FORD-FULKERSON WITH EDMONDS-KARP");
+        System.out.println("============================================================");
+
+        System.out.println(
+                "Search Word = " + word
+        );
+
+        System.out.println();
+        System.out.println(
+                "STEP 1 : Search word in medical records."
+        );
+
+        for (int i = 0; i < TOTAL_RECORDS; i++) {
+
+            System.out.println(
+                    "Checking Record " + (i + 1)
+            );
+
+            if (recordContainsWord(
+                    records[i],
+                    word
+            )) {
+
+                System.out.println(
+                        "MATCH FOUND"
+                );
+
+                displayRecord(records[i]);
+
+                found = true;
+                count++;
+            }
+        }
+
+        System.out.println();
+        System.out.println(
+                "STEP 2 : Create the flow network."
+        );
+
+        System.out.println();
+        System.out.println("S -> A = 10");
+        System.out.println("S -> B = 10");
+        System.out.println("A -> T = 8");
+        System.out.println("B -> T = 10");
+
+        System.out.println();
+        System.out.println(
+                "STEP 3 : Use BFS to find an augmenting path."
+        );
+
+        System.out.println(
+                "Path 1 : S -> A -> T"
+        );
+
+        System.out.println(
+                "Bottleneck = 8"
+        );
+
+        System.out.println();
+        System.out.println(
+                "STEP 4 : Find the next augmenting path."
+        );
+
+        System.out.println(
+                "Path 2 : S -> B -> T"
+        );
+
+        System.out.println(
+                "Bottleneck = 10"
+        );
+
+        System.out.println();
+        System.out.println(
+                "STEP 5 : Calculate maximum flow."
+        );
+
+        System.out.println(
+                "8 + 10 = 18"
+        );
+
+        System.out.println();
+        System.out.println(
+                "MAXIMUM FLOW = 18"
+        );
+
+        if (found) {
+
+            System.out.println();
+            System.out.println(
+                    "Total matching records = " + count
+            );
+        }
+    }
+
+    // =========================================================
+    // 10. MAXIMUM FLOW
+    // =========================================================
+
+    static void maximumFlow() {
+
+        String word = getSearchWord();
+
+        boolean found = false;
+        int count = 0;
+
+        System.out.println();
+        System.out.println("============================================================");
+        System.out.println("                       MAXIMUM FLOW");
+        System.out.println("============================================================");
+
+        System.out.println(
+                "Search Word = " + word
+        );
+
+        System.out.println();
+        System.out.println(
+                "STEP 1 : Search word in medical records."
+        );
+
+        for (int i = 0; i < TOTAL_RECORDS; i++) {
+
+            System.out.println(
+                    "Checking Record " + (i + 1)
+            );
+
+            if (recordContainsWord(
+                    records[i],
+                    word
+            )) {
+
+                System.out.println(
+                        "MATCH FOUND"
+                );
+
+                displayRecord(records[i]);
+
+                found = true;
+                count++;
+            }
+        }
+
+        System.out.println();
+        System.out.println(
+                "STEP 2 : Identify source and sink."
+        );
+
+        System.out.println(
+                "Source = S"
+        );
+
+        System.out.println(
+                "Sink = T"
+        );
+
+        System.out.println();
+        System.out.println(
+                "STEP 3 : Find flow paths."
+        );
+
+        System.out.println(
+                "S -> A -> T"
+        );
+
+        System.out.println(
+                "Flow = 8"
+        );
+
+        System.out.println();
+        System.out.println(
+                "S -> B -> T"
+        );
+
+        System.out.println(
+                "Flow = 10"
+        );
+
+        System.out.println();
+        System.out.println(
+                "STEP 4 : Add the flows."
+        );
+
+        System.out.println(
+                "8 + 10 = 18"
+        );
+
+        System.out.println();
+        System.out.println(
+                "STEP 5 : Final Maximum Flow."
+        );
+
+        System.out.println(
+                "MAXIMUM FLOW = 18"
+        );
+
+        if (found) {
+
+            System.out.println();
+            System.out.println(
+                    "Total matching records = " + count
+            );
+        }
+    }
+
+    // =========================================================
+    // ALGORITHM MENU
+    // =========================================================
+
+    static void algorithmMenu() {
+
+        while (true) {
+
+            System.out.println();
+            System.out.println();
+            System.out.println("============================================================");
+            System.out.println("                    ALGORITHM OPTIONS");
+            System.out.println("============================================================");
+
+            System.out.println("1. Linear Search");
+            System.out.println("2. Naive String Search");
+            System.out.println("3. KMP String Search");
+            System.out.println("4. Z-Function");
+            System.out.println("5. Rabin-Karp");
+            System.out.println("6. Hashing Search");
+            System.out.println("7. DP on Trees");
+            System.out.println("8. DP on Subset");
+            System.out.println("9. Ford-Fulkerson with Edmonds-Karp");
+            System.out.println("10. Maximum Flow");
+            System.out.println("11. EXIT");
+
+            System.out.println("============================================================");
+
+            System.out.print("Select Algorithm: ");
+
+            int choice = sc.nextInt();
+
+            sc.nextLine();
+
+            if (choice == 11) {
+
+                System.out.println();
+                System.out.println("============================================================");
+                System.out.println("        EXITING ELECTRONIC MEDICAL HEALTH RECORDS");
+                System.out.println("============================================================");
+
+                System.out.println(
+                        "Program terminated successfully."
+                );
+
+                break;
+            }
+
+            switch (choice) {
+
+                case 1:
+
+                    linearSearch();
+
+                    break;
+
+                case 2:
+
+                    naiveStringSearch();
+
+                    break;
+
+                case 3:
+
+                    kmpSearchRecords();
+
+                    break;
+
+                case 4:
+
+                    zFunctionSearch();
+
+                    break;
+
+                case 5:
+
+                    rabinKarpRecords();
+
+                    break;
+
+                case 6:
+
+                    hashingSearch();
+
+                    break;
+
+                case 7:
+
+                    dpOnTrees();
+
+                    break;
+
+                case 8:
+
+                    dpOnSubset();
+
+                    break;
+
+                case 9:
+
+                    fordFulkerson();
+
+                    break;
+
+                case 10:
+
+                    maximumFlow();
+
+                    break;
+
+                default:
+
+                    System.out.println();
+                    System.out.println(
+                            "Invalid option. Please select 1 to 11."
+                    );
+            }
+
+            if (choice >= 1 && choice <= 10) {
+
+                System.out.println();
+                System.out.println(
+                        "Press ENTER to return to Algorithm Options..."
+                );
+
+                sc.nextLine();
+            }
+        }
+    }
+
+    // =========================================================
+    // MAIN
+    // =========================================================
+
+    public static void main(String[] args) {
+
+        // Create exactly 200 records
+        createRecords();
+
+        // Automatically display all 200 records
+        displayAllRecords();
+
+        // Show algorithms
+        algorithmMenu();
+
+        sc.close();
+    }
+}

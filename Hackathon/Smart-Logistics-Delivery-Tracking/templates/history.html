@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block title %}Delivery History | LogiFlow{% endblock %}
+
+{% block page_title %}
+Delivery History
+{% endblock %}
+
+{% block content %}
+
+<div class="panel">
+
+    <div class="panel-header">
+
+        <div>
+            <h2>Completed Deliveries</h2>
+            <p>Historical record of successfully delivered shipments.</p>
+        </div>
+
+        <div class="history-count">
+            {{ shipments|length }} Deliveries
+        </div>
+
+    </div>
+
+
+    <div class="table-wrapper">
+
+        <table>
+
+            <thead>
+
+                <tr>
+                    <th>Tracking ID</th>
+                    <th>Customer</th>
+                    <th>Route</th>
+                    <th>Package</th>
+                    <th>Status</th>
+                    <th>Completed</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+            {% for shipment in shipments %}
+
+                <tr>
+
+                    <td>
+                        <strong>{{ shipment.tracking_id }}</strong>
+                    </td>
+
+                    <td>{{ shipment.customer }}</td>
+
+                    <td>
+                        {{ shipment.pickup }}
+                        →
+                        {{ shipment.destination }}
+                    </td>
+
+                    <td>{{ shipment.package_type }}</td>
+
+                    <td>
+                        <span class="status delivered">
+                            Delivered
+                        </span>
+                    </td>
+
+                    <td>{{ shipment.created_at }}</td>
+
+                </tr>
+
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+{% endblock %}

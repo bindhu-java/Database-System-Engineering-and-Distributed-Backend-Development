@@ -1,0 +1,162 @@
+{% extends "base.html" %}
+
+{% block title %}Distributed System | LogiFlow{% endblock %}
+
+{% block page_title %}
+Distributed Database
+{% endblock %}
+
+{% block content %}
+
+<div class="distributed-intro panel">
+
+    <h2>Distributed Logistics Infrastructure</h2>
+
+    <p>
+        A scalable architecture designed to support large numbers
+        of users, vehicles and deliveries.
+    </p>
+
+</div>
+
+
+<div class="cluster">
+
+    <div class="server primary-server">
+
+        <div class="server-icon">
+            DB
+        </div>
+
+        <h3>Primary Database</h3>
+
+        <p>Hyderabad</p>
+
+        <span class="server-status">
+            ● Healthy
+        </span>
+
+    </div>
+
+
+    <div class="replication-line"></div>
+
+
+    <div class="replica-container">
+
+        <div class="server">
+
+            <div class="server-icon">
+                R1
+            </div>
+
+            <h3>Replica 01</h3>
+
+            <p>Bengaluru</p>
+
+            <span class="server-status">
+                ● Healthy
+            </span>
+
+        </div>
+
+
+        <div class="server">
+
+            <div class="server-icon">
+                R2
+            </div>
+
+            <h3>Replica 02</h3>
+
+            <p>Mumbai</p>
+
+            <span class="server-status">
+                ● Healthy
+            </span>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="stats-grid">
+
+    <div class="stat-card">
+
+        <div class="stat-icon green">
+            ✓
+        </div>
+
+        <div>
+            <span>Replication</span>
+            <h2>Active</h2>
+            <small>Primary → Replicas</small>
+        </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <div class="stat-icon blue">
+            R
+        </div>
+
+        <div>
+            <span>Read Scaling</span>
+            <h2>Enabled</h2>
+            <small>Replica reads</small>
+        </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <div class="stat-icon orange">
+            S
+        </div>
+
+        <div>
+            <span>Sharding</span>
+            <h2>Enabled</h2>
+            <small>Horizontal partitioning</small>
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="panel">
+
+    <h2>CAP Theorem</h2>
+
+    <div class="cap-grid">
+
+        <div class="cap-card">
+            <strong>C</strong>
+            <h3>Consistency</h3>
+            <p>All nodes see consistent data.</p>
+        </div>
+
+        <div class="cap-card">
+            <strong>A</strong>
+            <h3>Availability</h3>
+            <p>Requests continue to receive responses.</p>
+        </div>
+
+        <div class="cap-card">
+            <strong>P</strong>
+            <h3>Partition Tolerance</h3>
+            <p>System continues despite network partitions.</p>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

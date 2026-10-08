@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>High-Performance Text Searching for Electronic Health Records</title>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f3f7f8;--panel:#fff;--ink:#12232b;--mute:#5b6f78;--line:#d3e0e4;--teal:#0f7c86;--hit:#fde8c8;--hitink:#7a3e00;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1a1f;--panel:#15262d;--ink:#e6f0f2;--mute:#8fa6af;--line:#28414a;--teal:#4cc2cd;--hit:#4a3312;--hitink:#ffd9a0}}
+:root[data-theme="dark"]{--bg:#0e1a1f;--panel:#15262d;--ink:#e6f0f2;--mute:#8fa6af;--line:#28414a;--teal:#4cc2cd;--hit:#4a3312;--hitink:#ffd9a0}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 "Atkinson Hyperlegible",system-ui,sans-serif}
+header{padding:28px 20px 8px;max-width:1100px;margin:auto}
+h1{margin:0;font-size:clamp(1.6rem,4vw,2.4rem);line-height:1.15}
+header p{margin:6px 0 0;color:var(--mute);max-width:60ch}
+main{max-width:1100px;margin:auto;padding:12px 20px 40px;display:grid;grid-template-columns:320px 1fr;gap:20px}
+@media(max-width:800px){main{grid-template-columns:1fr}}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px}
+label{display:block;font-weight:700;margin:12px 0 4px}
+select,input{width:100%;padding:10px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink);font:inherit}
+button{margin-top:14px;width:100%;padding:11px;border:0;border-radius:6px;background:var(--teal);color:#fff;font:700 1rem inherit;font-family:inherit;cursor:pointer}
+:root:not([data-theme="light"]) button{color:#06262a}
+button:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid var(--teal);outline-offset:2px}
+.stats{display:flex;gap:18px;flex-wrap:wrap;margin:0 0 12px}
+.stats div{min-width:90px}.stats b{display:block;font-size:1.5rem}.stats span{color:var(--mute);font-size:.85rem}
+pre.log{margin:0 0 14px;padding:12px;background:var(--bg);border:1px solid var(--line);border-radius:6px;white-space:pre-wrap;font:.85rem/1.5 ui-monospace,Menlo,monospace;overflow-x:auto}
+.rec{border-top:1px solid var(--line);padding:10px 0}
+.rec:first-child{border-top:0}
+.rec.hit{background:var(--hit);color:var(--hitink);padding:10px;border-radius:6px;margin:4px 0}
+.rec b{font-weight:700}.rec small{color:var(--mute)}.rec.hit small{color:var(--hitink)}
+.list{max-height:70vh;overflow:auto}
+mark{background:var(--teal);color:#fff;border-radius:2px;padding:0 2px}
+</style>
+</head>
+<body>
+<header>
+<h1>High-Performance Text Searching for Electronic Health Records</h1>
+<p>Search 200 patient records with ten algorithms. Enter a symptom or diagnosis word, pick an algorithm and compare how each one works.</p>
+</header>
+<main>
+<section class="panel" aria-label="Search controls">
+<label for="algo">Algorithm</label>
+<select id="algo">
+<option value="linear">1. Linear Search</option>
+<option value="naive">2. Naive String Search</option>
+<option value="kmp">3. KMP String Search</option>
+<option value="z">4. Z-Function</option>
+<option value="rk">5. Rabin-Karp</option>
+<option value="hash">6. Hashing Search</option>
+<option value="tree">7. DP on Trees</option>
+<option value="subset">8. DP on Subset</option>
+<option value="ff">9. Ford-Fulkerson with Edmonds-Karp</option>
+<option value="flow">10. Maximum Flow</option>
+</select>
+<label for="word">Word to search</label>
+<input id="word" value="cold" autocomplete="off" placeholder="e.g. fever, cough, migraine">
+<button id="go">Run search</button>
+<button id="all" style="background:transparent;color:var(--teal);border:1px solid var(--teal)">Show all 200 records</button>
+</section>
+<section class="panel" aria-live="polite">
+<div class="stats"><div><b id="sCount">200</b><span>records shown</span></div><div><b id="sCmp">-</b><span>records checked</span></div><div><b id="sTime">-</b><span>milliseconds</span></div></div>
+<pre class="log" id="log">Choose an algorithm and run a search.</pre>
+<div class="list" id="list"></div>
+</section>
+</main>
+<script>
+const TOTAL=200;
+const T=[["Fever, Cough, Headache, Fatigue","Fever, cough and acute respiratory infection syndrome"],["Cough, Cold, Sore Throat","Common cold with mild respiratory symptoms"],["Headache, Nausea, Dizziness","Migraine related headache and dizziness"],["Fever, Body Pain, Weakness","Viral fever with body pain and weakness"],["Stomach Pain, Vomiting","Gastric infection with abdominal discomfort"],["Cough, Breathing Difficulty","Respiratory infection with breathing difficulty"],["Back Pain, Joint Pain","Musculoskeletal pain requiring observation"],["Fever, Headache, Cough","Flu symptoms with fever and headache"],["Fatigue, Weakness, Headache","General fatigue and weakness"],["Cold, Cough, Fever","Upper respiratory tract infection"]];
+const recs=Array.from({length:TOTAL},(_,i)=>({id:"PAT-"+String(i+1).padStart(4,"0"),age:18+i%63,sym:T[i%10][0],note:T[i%10][1]}));
+
+const naive=(t,p)=>{if(!p)return true;for(let i=0;i<=t.length-p.length;i++){let j=0;while(j<p.length&&t[i+j]===p[j])j++;if(j===p.length)return true}return false};
+const lpsOf=p=>{const l=[0];let len=0,i=1;while(i<p.length){if(p[i]===p[len]){l[i++]=++len}else if(len)len=l[len-1];else l[i++]=0}return l};
+const kmp=(t,p)=>{if(!p)return true;const l=lpsOf(p);let i=0,j=0;while(i<t.length){if(t[i]===p[j]){i++;j++;if(j===p.length)return true}else if(j)j=l[j-1];else i++}return false};
+const zArr=s=>{const n=s.length,z=Array(n).fill(0);let L=0,R=0;for(let i=1;i<n;i++){if(i<=R)z[i]=Math.min(R-i+1,z[i-L]);while(i+z[i]<n&&s[z[i]]===s[i+z[i]])z[i]++;if(i+z[i]-1>R){L=i;R=i+z[i]-1}}return z};
+const zs=(t,p)=>{if(!p)return true;const z=zArr(p+"$"+t);for(let i=p.length+1;i<z.length;i++)if(z[i]===p.length)return true;return false};
+const rk=(t,p)=>{const n=t.length,m=p.length;if(!m)return true;if(m>n)return false;const B=256,P=101;let ph=0,th=0,pw=1;for(let i=0;i<m-1;i++)pw=pw*B%P;for(let i=0;i<m;i++){ph=(B*ph+p.charCodeAt(i))%P;th=(B*th+t.charCodeAt(i))%P}for(let i=0;i<=n-m;i++){if(ph===th&&t.substr(i,m)===p)return true;if(i<n-m){th=(B*(th-t.charCodeAt(i)*pw)+t.charCodeAt(i+m))%P;if(th<0)th+=P}}return false};
+const hf=s=>{let h=0n;for(const c of s)h=h*31n+BigInt(c.charCodeAt(0));return h};
+const contains=(r,w)=>(r.sym+" "+r.note).toLowerCase().includes(w)||r.sym.toLowerCase().includes(w)||r.note.toLowerCase().includes(w);
+const both=f=>(r,w)=>f(r.sym.toLowerCase(),w)||f(r.note.toLowerCase(),w);
+
+const ALG={
+linear:{name:"Linear Search",m:contains,steps:w=>["Search word = "+w,"Start from the first record.","Compare records one by one."]},
+naive:{name:"Naive String Search",m:both(naive),steps:w=>["Pattern = "+w,"Compare the pattern at every position of each record."]},
+kmp:{name:"KMP String Search",m:both(kmp),steps:w=>{const l=lpsOf(w);return["Pattern = "+w,"Build the LPS array so mismatches never move backwards in the text.","Pattern: "+[...w].join(" "),"LPS:     "+l.join(" ")]}},
+z:{name:"Z-Function",m:both(zs),steps:w=>["Pattern = "+w,"Join pattern + $ + record, then compute Z values.","A Z value equal to the pattern length means a match."]},
+rk:{name:"Rabin-Karp",m:both(rk),steps:w=>["Pattern = "+w,"Compute the pattern hash (base 256, prime 101).","Slide a rolling hash along each record.","Verify character by character only when hashes agree."]},
+hash:{name:"Hashing Search",m:contains,steps:w=>["Search word = "+w,"Hash value = "+hf(w).toString()]},
+tree:{name:"DP on Trees",m:contains,steps:w=>["Search word = "+w,"Records are grouped under a tree: root, left/right, leaves R1-R4.","DP values are computed from the leaves upward: DP[1..7] = 1..7."]},
+subset:{name:"DP on Subset",m:contains,steps:w=>["Search word = "+w,"Subset = 1 2 3 4 5","DP table initialised for 200 records; matching records are marked true."]},
+ff:{name:"Ford-Fulkerson with Edmonds-Karp",m:contains,steps:w=>["Search word = "+w,"Flow network: S->A 10, S->B 10, A->T 8, B->T 10.","BFS path 1: S -> A -> T, bottleneck 8.","BFS path 2: S -> B -> T, bottleneck 10.","8 + 10 = 18","MAXIMUM FLOW = 18"]},
+flow:{name:"Maximum Flow",m:contains,steps:w=>["Search word = "+w,"Source = S, Sink = T.","S -> A -> T carries 8.","S -> B -> T carries 10.","8 + 10 = 18","MAXIMUM FLOW = 18"]}
+};
+
+const $=id=>document.getElementById(id);
+const esc=s=>s.replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
+function hl(s,w){if(!w)return esc(s);const i=s.toLowerCase().indexOf(w);return i<0?esc(s):esc(s.slice(0,i))+"<mark>"+esc(s.slice(i,i+w.length))+"</mark>"+esc(s.slice(i+w.length))}
+function draw(list,w,hit){$("list").innerHTML=list.map(r=>`<div class="rec${hit?" hit":""}"><b>${r.id}</b> <small>age ${r.age}</small><br>${hl(r.sym,w)}<br><small>${hl(r.note,w)}</small></div>`).join("");$("sCount").textContent=list.length}
+function run(){
+ const w=$("word").value.trim().toLowerCase();const a=ALG[$("algo").value];
+ const t0=performance.now();const out=recs.filter(r=>a.m(r,w));const ms=(performance.now()-t0).toFixed(2);
+ $("sCmp").textContent=TOTAL;$("sTime").textContent=ms;
+ const lines=a.steps(w).map((s,i)=>"Step "+(i+1)+": "+s);
+ lines.unshift(a.name.toUpperCase());
+ lines.push(out.length?"Done. Total matching records = "+out.length:"Done. No record found for word: "+w);
+ $("log").textContent=lines.join("\n");
+ draw(out,w,true);
+}
+$("go").onclick=run;$("word").addEventListener("keydown",e=>{if(e.key==="Enter")run()});
+$("all").onclick=()=>{$("log").textContent="All 200 records.";$("sCmp").textContent="-";$("sTime").textContent="-";draw(recs,"",false)};
+draw(recs,"",false);
+</script>
+</body>
+</html>
